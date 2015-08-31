@@ -8,14 +8,19 @@
 *****************************************************************************/
 package ab.demo.other;
 
-
+import java.awt.Point;
 
 public class Shot {
-	
+
 	private int x;
 	private int y;
 	private int dx;
 	private int dy;
+	private int t_shot;
+	private int t_tap;
+
+	private Point releasePoint;
+
 	public int getDx() {
 		return dx;
 	}
@@ -30,6 +35,17 @@ public class Shot {
 		return dy;
 	}
 
+	public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap, Point releasePoint) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.dx = dx;
+		this.dy = dy;
+		this.t_shot = t_shot;
+		this.t_tap = t_tap;
+		this.releasePoint = releasePoint;
+	}
+
 
 	public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap) {
 		super();
@@ -40,7 +56,7 @@ public class Shot {
 		this.t_shot = t_shot;
 		this.t_tap = t_tap;
 	}
-	
+
 	public Shot(int x, int y, int dx, int dy, int t_shot) {
 		super();
 		this.x = x;
@@ -54,17 +70,19 @@ public class Shot {
 	public void setDy(int dy) {
 		this.dy = dy;
 	}
-	private int t_shot;
-	private int t_tap;
-public Shot()
-{
-	x = 0;
-	y = 0;
-	dx = 0;
-	dy = 0;
-	t_shot = 0;
-	t_tap = 0;
-}
+
+
+
+
+
+	public Shot()	{
+		x = 0;
+		y = 0;
+		dx = 0;
+		dy = 0;
+		t_shot = 0;
+		t_tap = 0;
+	}
 
 
 public Shot(int x, int y, int t_shot, int t_tap) {
@@ -78,6 +96,10 @@ public Shot(int x, int y, int t_shot, int t_tap) {
 
 public int getX() {
 	return x;
+}
+
+public Point getReleasePoint() {
+	return this.releasePoint;
 }
 
 
@@ -120,13 +142,13 @@ public String toString()
 {
 	String result = "";
 	if(x == 0 && y == 0)
-	{	
-	 if(t_tap!=0)	
+	{
+	 if(t_tap!=0)
 		result+= "tap at:  "  + t_tap;
 	}
 	else
-		result += "Shoot from: ("+ (x + dx)+ "  " + (y + dy) +" )" + " at time  " + t_shot ;	
-	
+		result += "Shoot from: ("+ (x + dx)+ "  " + (y + dy) +" )" + " at time  " + t_shot ;
+
    return  result;
 
 }
