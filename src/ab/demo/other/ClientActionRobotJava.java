@@ -84,7 +84,6 @@ public class ClientActionRobotJava extends ClientActionRobot {
 			return ABType.Unknown;
 		Collections.sort(_birds, new Comparator<Rectangle>(){
 
-			@Override
 			public int compare(Rectangle o1, Rectangle o2) {
 				
 				return ((Integer)(o1.y)).compareTo((Integer)(o2.y));

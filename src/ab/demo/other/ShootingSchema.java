@@ -49,7 +49,6 @@ public void shoot(final Proxy proxy,List<Shot> csc)
 	
 	Collections.sort(shots, new Comparator<Shot>(){
 
-		@Override
 		public int compare(Shot arg0, Shot arg1) {
 			
 			return ((Integer)arg0.getT_shot()).compareTo(arg1.getT_shot());

@@ -15,17 +15,14 @@ import ab.server.ProxyMessage;
 
 // request a screenshot from the game
 public class ProxyScreenshotMessage implements ProxyMessage<byte[]> {
-    @Override
     public String getMessageName() {
         return "screenshot";
     }
 
-    @Override
     public JSONObject getJSON() {
         return new JSONObject();
     }
 
-    @Override
     public byte[] gotResponse(JSONObject data) {
         String imageStr = (String) data.get("data");
         imageStr = imageStr.split(",", 2)[1];
