@@ -169,7 +169,7 @@ public class RandomAgent implements Runnable {
       shots = bestShots.get(currentLevel - 1).getShots();
     } else {
       // Get all screem itens.
-      // objects = makeActionChoices(vision);
+      objects = makeActionChoices(vision);
     }
 
     GameState state = aRobot.getState();
@@ -197,8 +197,18 @@ public class RandomAgent implements Runnable {
         state = executeShot(sling, shot, state, releasePoint);
       }
     }
-
     return state;
+  }
+  
+  public List<ABObject> makeActionChoices(final Vision vision) {
+    List<ABObject> objects = new ArrayList<ABObject>();
+    
+    objects.addAll(vision.findPigsRealShape());
+    objects.addAll(vision.findBlocksRealShape());
+    objects.addAll(vision.findHills());
+    objects.addAll(vision.findTNTs());
+    
+    return objects.subList(0, 1);
   }
 
   public Point getReleasePoint(Rectangle sling, Point _tpt) {
