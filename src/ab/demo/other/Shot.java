@@ -9,9 +9,14 @@
 package ab.demo.other;
 
 import java.awt.Point;
+import java.io.Serializable;
 
-public class Shot {
+public class Shot implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2279112400720899118L;
 	private int x;
 	private int y;
 	private int dx;
