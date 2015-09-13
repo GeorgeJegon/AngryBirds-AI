@@ -22,13 +22,11 @@ public class ProxyDragMessage implements ProxyMessage<Object> {
 		this.dy = dy;
 	}
 	
-	@Override
 	public String getMessageName() {
 		return "drag";
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override
 	public JSONObject getJSON() {
 		JSONObject o = new JSONObject();
 		o.put("x", x);
@@ -38,7 +36,6 @@ public class ProxyDragMessage implements ProxyMessage<Object> {
 		return o;
 	}
 	
-	@Override
 	public Object gotResponse(JSONObject data) {
 		return new Object();
 	}

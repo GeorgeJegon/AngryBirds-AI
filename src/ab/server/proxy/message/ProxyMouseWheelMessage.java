@@ -24,20 +24,17 @@ public class ProxyMouseWheelMessage implements ProxyMessage<Object> {
 		this.delta = delta;
 	}
 	
-	@Override
 	public String getMessageName() {
 		return "mousewheel";
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override
 	public JSONObject getJSON() {
 		JSONObject o = new JSONObject();
 		o.put("delta", delta);
 		return o;
 	}
 	
-	@Override
 	public Object gotResponse(JSONObject data) {
 		return new Object();
 	}

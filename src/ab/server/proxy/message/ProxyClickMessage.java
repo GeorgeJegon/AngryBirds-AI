@@ -20,13 +20,11 @@ public class ProxyClickMessage implements ProxyMessage<Object> {
 		this.y = y;
 	}
 	
-	@Override
 	public String getMessageName() {
 		return "click";
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override
 	public JSONObject getJSON() {
 		JSONObject o = new JSONObject();
 		o.put("x", x);
@@ -34,7 +32,6 @@ public class ProxyClickMessage implements ProxyMessage<Object> {
 		return o;
 	}
 	
-	@Override
 	public Object gotResponse(JSONObject data) {
 		return new Object();
 	}

@@ -226,7 +226,6 @@ public class ShowSeg implements Runnable {
 		// Check if argument is a directory or an image
 		if ((new File(args[0])).isDirectory()) {
 			images = new File(args[0]).listFiles(new FilenameFilter() {
-				@Override
 				public boolean accept(File directory, String fileName) {
 					return fileName.endsWith(".png");
 				}
@@ -266,7 +265,6 @@ public class ShowSeg implements Runnable {
 	}
 	//add for LoadLevel Agent
 
-	@Override
 	public void run() {
 		
 		ImageSegFrame frame = null;
