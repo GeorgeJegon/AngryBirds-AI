@@ -58,7 +58,13 @@ public class Util {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static Unmarshaller createUnmarshaller(Class objectClass) {
+	private static Unmarshaller createUnmarshaller(Object object) {
+		Class objectClass = object.getClass();
+
+		if (objectClass.getSimpleName().equals("Class")) {
+			objectClass = (Class) object;
+		}
+
 		JAXBContext context;
 		Unmarshaller unmarshaller = null;
 		try {
@@ -68,18 +74,8 @@ public class Util {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return unmarshaller;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private static Unmarshaller createUnmarshaller(Object object) {
-		Class objectClass = object.getClass();
-
-		if (objectClass.getSimpleName().equals("Class")) {
-			objectClass = (Class) object;
-		}
-
-		return createUnmarshaller(objectClass);
 	}
 
 	private static Marshaller createMarshaller(Object object) {
