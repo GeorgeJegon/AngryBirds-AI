@@ -1,5 +1,6 @@
 package ab.ai;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -45,15 +46,20 @@ public class Util {
 	public static Object loadXML(Object object, String fileNamePath) {
 		Unmarshaller unmarshaller = createUnmarshaller(object);
 		Object loaded = null;
-		try {
-			loaded = unmarshaller.unmarshal(new FileReader(fileNamePath));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		File fileXML = new File(fileNamePath);
+		
+		if (fileXML.length() > 0) {
+			try {
+				loaded = unmarshaller.unmarshal(new FileReader(fileNamePath));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
+		
 		return loaded;
 	}
 
