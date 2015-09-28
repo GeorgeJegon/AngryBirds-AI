@@ -28,57 +28,9 @@ public class Shot implements Serializable {
 	private int dy;
 	private int t_shot;
 	private int t_tap;
-
 	private Point releasePoint;
-
-	@XmlAttribute
-	public int getDx() {
-		return dx;
-	}
-
-	public void setDx(int dx) {
-		this.dx = dx;
-	}
-
-	@XmlAttribute
-	public int getDy() {
-		return dy;
-	}
-
-	public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap,
-			Point releasePoint) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
-		this.t_shot = t_shot;
-		this.t_tap = t_tap;
-		this.releasePoint = releasePoint;
-	}
-
-	public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
-		this.t_shot = t_shot;
-		this.t_tap = t_tap;
-	}
-
-	public Shot(int x, int y, int dx, int dy, int t_shot) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
-		this.t_shot = t_shot;
-	}
-
-	public void setDy(int dy) {
-		this.dy = dy;
-	}
+	private int releasePointX;
+	private int releasePointY;
 
 	public Shot() {
 		x = 0;
@@ -97,23 +49,60 @@ public class Shot implements Serializable {
 		this.t_tap = t_tap;
 	}
 
+	public Shot(int x, int y, int dx, int dy, int t_shot) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.dx = dx;
+		this.dy = dy;
+		this.t_shot = t_shot;
+	}
+
+	public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.dx = dx;
+		this.dy = dy;
+		this.t_shot = t_shot;
+		this.t_tap = t_tap;
+	}
+
+	public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap,
+			Point releasePoint) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.dx = dx;
+		this.dy = dy;
+		this.t_shot = t_shot;
+		this.t_tap = t_tap;
+		this.releasePoint = releasePoint;
+		this.releasePointX = releasePoint.x;
+		this.releasePointY = releasePoint.y;
+	}
+
+	@XmlAttribute
+	public int getDx() {
+		return dx;
+	}
+
+	public void setDx(int dx) {
+		this.dx = dx;
+	}
+
+	@XmlAttribute
+	public int getDy() {
+		return dy;
+	}
+
+	public void setDy(int dy) {
+		this.dy = dy;
+	}
+
 	@XmlAttribute
 	public int getX() {
 		return x;
-	}
-
-	public Point getReleasePoint() {
-		return this.releasePoint;
-	}
-	
-	@XmlAttribute
-	public int getReleasePointX() {
-		return this.releasePoint.x;
-	}
-	
-	@XmlAttribute
-	public int getReleasePointY() {
-		return this.releasePoint.y;
 	}
 
 	public void setX(int x) {
@@ -145,6 +134,28 @@ public class Shot implements Serializable {
 
 	public void setT_tap(int t_tap) {
 		this.t_tap = t_tap;
+	}
+
+	public Point getReleasePoint() {
+		return new Point(this.releasePointX, this.releasePointY);
+	}
+
+	@XmlAttribute
+	public int getReleasePointX() {
+		return this.releasePointX;
+	}
+
+	public void setReleasePointX(int releasePointX) {
+		this.releasePointX = releasePointX;
+	}
+
+	@XmlAttribute
+	public int getReleasePointY() {
+		return this.releasePointY;
+	}
+
+	public void setReleasePointY(int releasePointY) {
+		this.releasePointY = releasePointY;
 	}
 
 	public String toString() {
