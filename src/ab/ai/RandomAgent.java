@@ -34,7 +34,7 @@ public class RandomAgent implements Runnable {
 		prevTarget = null;
 		firstShot = true;
 		randomGenerator = new Random();
-//		bestShots = loadKnowledge();
+		bestShots = loadKnowledge();
 
 		ActionRobot.GoFromMainMenuToLevelSelection();
 	}
