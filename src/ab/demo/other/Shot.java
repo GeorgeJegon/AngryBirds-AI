@@ -28,7 +28,6 @@ public class Shot implements Serializable {
 	private int dy;
 	private int t_shot;
 	private int t_tap;
-	private Point releasePoint;
 	private int releasePointX;
 	private int releasePointY;
 
@@ -77,7 +76,6 @@ public class Shot implements Serializable {
 		this.dy = dy;
 		this.t_shot = t_shot;
 		this.t_tap = t_tap;
-		this.releasePoint = releasePoint;
 		this.releasePointX = releasePoint.x;
 		this.releasePointY = releasePoint.y;
 	}
