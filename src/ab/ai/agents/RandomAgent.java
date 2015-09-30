@@ -1,4 +1,4 @@
-package ab.ai;
+package ab.ai.agents;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import ab.ai.BestShot;
+import ab.ai.ListBestShots;
+import ab.ai.Util;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
 import ab.planner.TrajectoryPlanner;
