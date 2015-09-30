@@ -44,8 +44,9 @@ public class RandomAgent implements Runnable {
 	}
 
 	public ListBestShots loadKnowledge() {
-		return (ListBestShots) Util.loadXML(ListBestShots.class,
+		ListBestShots loaded = (ListBestShots) Util.loadXML(ListBestShots.class,
 				"bestshots.xml");
+		return (loaded != null) ? loaded : new ListBestShots();
 	}
 
 	// run the client
@@ -109,6 +110,7 @@ public class RandomAgent implements Runnable {
 	}
 
 	public GameState solve() {
+		
 		boolean hasBestShot = bestShots.size() > currentLevel - 1
 				&& bestShots.get(currentLevel - 1) != null
 				&& bestShots.get(currentLevel - 1).getShots().size() > shotNumber;
