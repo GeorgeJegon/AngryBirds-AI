@@ -1,45 +1,36 @@
 
 <listBestShots>
-    <_bestShots level="1" score="28300">
-        <shots dx="-186" dy="633" releasePointX="7" releasePointY="961" tShot="0" tTap="0" x="193" y="328"/>
+    <_bestShots level="1" score="29210">
+        <Shot dx="-186" dy="633" releasePointX="7" releasePointY="961" tShot="0" tTap="0" x="193" y="328"/>
     </_bestShots>
-    <_bestShots level="2" score="43040">
-        <shots dx="-553" dy="174" releasePointX="-345" releasePointY="489" tShot="0" tTap="0" x="208" y="315"/>
-        <shots dx="-556" dy="164" releasePointX="-348" releasePointY="479" tShot="0" tTap="937" x="208" y="315"/>
-        <shots dx="-496" dy="300" releasePointX="-288" releasePointY="615" tShot="0" tTap="0" x="208" y="315"/>
+    <_bestShots level="2" score="42630">
+        <Shot dx="-553" dy="174" releasePointX="-345" releasePointY="489" tShot="0" tTap="0" x="208" y="315"/>
+        <Shot dx="-556" dy="161" releasePointX="-348" releasePointY="476" tShot="0" tTap="0" x="208" y="315"/>
+        <Shot dx="-496" dy="300" releasePointX="-288" releasePointY="615" tShot="0" tTap="0" x="208" y="315"/>
     </_bestShots>
-    <_bestShots level="3" score="33190">
-        <shots dx="-229" dy="510" releasePointX="-59" releasePointY="846" tShot="0" tTap="0" x="170" y="336"/>
-        <shots dx="-516" dy="216" releasePointX="-346" releasePointY="552" tShot="0" tTap="0" x="170" y="336"/>
+    <_bestShots level="3" score="33200">
+        <Shot dx="-229" dy="510" releasePointX="-59" releasePointY="846" tShot="0" tTap="0" x="170" y="336"/>
+        <Shot dx="-516" dy="216" releasePointX="-346" releasePointY="552" tShot="0" tTap="0" x="170" y="336"/>
     </_bestShots>
     <_bestShots level="4" score="20900">
-        <shots dx="-196" dy="588" releasePointX="-1" releasePointY="919" tShot="0" tTap="0" x="195" y="331"/>
-        <shots dx="-592" dy="182" releasePointX="-397" releasePointY="513" tShot="0" tTap="0" x="195" y="331"/>
-        <shots dx="-592" dy="182" releasePointX="-397" releasePointY="513" tShot="0" tTap="0" x="195" y="331"/>
+        <Shot dx="-196" dy="588" releasePointX="-1" releasePointY="919" tShot="0" tTap="0" x="195" y="331"/>
+        <Shot dx="-592" dy="182" releasePointX="-397" releasePointY="513" tShot="0" tTap="0" x="195" y="331"/>
+        <Shot dx="-592" dy="182" releasePointX="-397" releasePointY="513" tShot="0" tTap="0" x="195" y="331"/>
     </_bestShots>
-    <_bestShots level="5" score="66870">
-        <shots dx="-212" dy="528" releasePointX="-25" releasePointY="863" tShot="0" tTap="0" x="187" y="335"/>
-        <shots dx="-565" dy="72" releasePointX="-378" releasePointY="407" tShot="0" tTap="0" x="187" y="335"/>
+    <_bestShots level="5" score="68340">
+        <Shot dx="-212" dy="528" releasePointX="-25" releasePointY="863" tShot="0" tTap="0" x="187" y="335"/>
+        <Shot dx="-568" dy="45" releasePointX="-381" releasePointY="380" tShot="0" tTap="0" x="187" y="335"/>
     </_bestShots>
-    <_bestShots level="6" score="15870">
-        <shots dx="-194" dy="546" releasePointX="-9" releasePointY="881" tShot="0" tTap="0" x="185" y="335"/>
-        <shots dx="-185" dy="549" releasePointX="0" releasePointY="884" tShot="0" tTap="0" x="185" y="335"/>
-        <shots dx="-545" dy="196" releasePointX="-360" releasePointY="531" tShot="0" tTap="0" x="185" y="335"/>
-        <shots dx="-493" dy="304" releasePointX="-308" releasePointY="639" tShot="0" tTap="0" x="185" y="335"/>
+    <_bestShots level="6" score="16160">
+        <Shot dx="-194" dy="546" releasePointX="-9" releasePointY="881" tShot="0" tTap="0" x="185" y="335"/>
+        <Shot dx="-545" dy="196" releasePointX="-360" releasePointY="531" tShot="0" tTap="0" x="185" y="335"/>
+        <Shot dx="-187" dy="548" releasePointX="-2" releasePointY="883" tShot="0" tTap="0" x="185" y="335"/>
+        <Shot dx="-493" dy="305" releasePointX="-308" releasePointY="640" tShot="0" tTap="0" x="185" y="335"/>
     </_bestShots>
-    <_bestShots level="7" score="22200">
-        <shots dx="-450" dy="332" releasePointX="-280" releasePointY="668" tShot="0" tTap="0" x="170" y="336"/>
-        <shots dx="-239" dy="506" releasePointX="-69" releasePointY="842" tShot="0" tTap="0" x="170" y="336"/>
-        <shots dx="-477" dy="292" releasePointX="-307" releasePointY="628" tShot="0" tTap="0" x="170" y="336"/>
-        <shots dx="-238" dy="506" releasePointX="-68" releasePointY="842" tShot="0" tTap="0" x="170" y="336"/>
-    </_bestShots>
-    <_bestShots level="8" score="45140">
-        <shots dx="-157" dy="548" releasePointX="27" releasePointY="884" tShot="0" tTap="0" x="184" y="336"/>
-        <shots dx="-470" dy="321" releasePointX="-286" releasePointY="657" tShot="0" tTap="0" x="184" y="336"/>
-    </_bestShots>
-    <_bestShots level="9" score="37340">
-        <shots dx="-209" dy="486" releasePointX="-36" releasePointY="807" tShot="0" tTap="0" x="173" y="321"/>
-        <shots dx="-205" dy="488" releasePointX="-32" releasePointY="809" tShot="0" tTap="0" x="173" y="321"/>
-        <shots dx="-487" dy="208" releasePointX="-314" releasePointY="529" tShot="0" tTap="0" x="173" y="321"/>
+    <_bestShots level="7" score="19740">
+        <Shot dx="-235" dy="508" releasePointX="-65" releasePointY="844" tShot="0" tTap="0" x="170" y="336"/>
+        <Shot dx="-477" dy="292" releasePointX="-307" releasePointY="628" tShot="0" tTap="0" x="170" y="336"/>
+        <Shot dx="-477" dy="292" releasePointX="-307" releasePointY="628" tShot="0" tTap="0" x="170" y="336"/>
+        <Shot dx="-243" dy="504" releasePointX="-73" releasePointY="840" tShot="0" tTap="0" x="170" y="336"/>
     </_bestShots>
 </listBestShots>

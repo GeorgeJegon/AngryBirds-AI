@@ -17,7 +17,7 @@ public class BestShot implements Serializable {
 	private int level;
 	@XmlAttribute
 	private int score;
-	@XmlElement
+	@XmlElement(name = "Shot")
 	private List<Shot> shots;
 
 	public BestShot() {
