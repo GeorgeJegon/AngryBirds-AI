@@ -18,6 +18,7 @@ import ab.vision.Vision;
 
 public class RandomAgent extends Agent implements Runnable {
 	private int shotNumber = 0;
+	private List<Shot> listObjects = new ArrayList<Shot>();
 	private ListBestShots bestShots = new ListBestShots();
 	private static final String BEST_SHOTS_FILE = "bestshots.xml";
 
@@ -26,7 +27,7 @@ public class RandomAgent extends Agent implements Runnable {
 		bestShots = loadBestShots();
 		ActionRobot.GoFromMainMenuToLevelSelection();
 	}
-	
+
 	@Override
 	protected void beforeRestartLevel() {
 
@@ -36,7 +37,7 @@ public class RandomAgent extends Agent implements Runnable {
 	protected void afterRestartLevel() {
 
 	}
-	
+
 	@Override
 	protected void beforeLoadNextLevel() {
 		int score = StateUtil.getScore(ActionRobot.proxy);
@@ -53,7 +54,7 @@ public class RandomAgent extends Agent implements Runnable {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void afterLoadNextLevel() {
 		this.listObjects = new ArrayList<Shot>();
@@ -95,10 +96,8 @@ public class RandomAgent extends Agent implements Runnable {
 		}
 
 		if (hasBestShot) {
-			// Use the shots that learn to pass the level.
 			shots = bestShots.get(currentLevel - 1).getShots();
 		} else {
-			// Get all screem itens.
 			objects = makeActionChoices(vision);
 		}
 
@@ -111,7 +110,6 @@ public class RandomAgent extends Agent implements Runnable {
 			if (hasBestShot) {
 				System.out.println("Ja sei um tiro");
 				shot = shots.get(shotNumber);
-				// Execute the knowledge best shot.
 				state = executeShot(sling, shot, state, shot.getReleasePoint());
 			} else {
 				// Random pick up an object.
@@ -150,12 +148,24 @@ public class RandomAgent extends Agent implements Runnable {
 		}
 		na.run();
 	}
-	
+
 	private void saveBestShots() {
 		this.saveKnowledge(bestShots, BEST_SHOTS_FILE);
 	}
-	
-	private ListBestShots loadBestShots(){
-		return (ListBestShots) this.loadKnowledge(ListBestShots.class, BEST_SHOTS_FILE);
+
+	private ListBestShots loadBestShots() {
+		return (ListBestShots) this.loadKnowledge(ListBestShots.class,
+				BEST_SHOTS_FILE);
+	}
+
+	@Override
+	protected void onShotFinish(Shot currentShot) {
+		int current_score = this.aRobot.current_score;
+		int shot_score = this.aRobot.getScore() - current_score;
+		
+		currentShot.setScore(shot_score);
+		this.listObjects.add(currentShot);
+		
+		this.aRobot.current_score += shot_score; 
 	}
 }
