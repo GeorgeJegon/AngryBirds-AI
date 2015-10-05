@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import ab.ai.BestShot;
-import ab.ai.ListBestShots;
 import ab.ai.Util;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
 import ab.planner.TrajectoryPlanner;
-import ab.utils.StateUtil;
 import ab.vision.ABObject;
 import ab.vision.Vision;
 import ab.vision.GameStateExtractor.GameState;
@@ -21,7 +18,6 @@ import ab.vision.GameStateExtractor.GameState;
 public abstract class Agent {
 	protected ActionRobot aRobot;
 	protected Random randomGenerator;
-	protected List<Shot> listObjects = null;
 
 	protected TrajectoryPlanner tp;
 	protected boolean firstShot;
@@ -42,7 +38,6 @@ public abstract class Agent {
 	}
 
 	public void run() {
-		listObjects = new ArrayList<Shot>();
 		aRobot.loadLevel(currentLevel);
 
 		while (true) {
@@ -85,6 +80,8 @@ public abstract class Agent {
 	protected abstract void beforeLoadNextLevel();
 
 	protected abstract void afterLoadNextLevel();
+	
+	protected abstract void onShotFinish(Shot currentShot);
 
 	protected void saveKnowledge(Object object, String filePathName) {
 		Util.saveXML(object, filePathName);
@@ -92,7 +89,8 @@ public abstract class Agent {
 
 	@SuppressWarnings("rawtypes")
 	protected Object loadKnowledge(Class objectClass, String filePathName) {
-		Object loaded = objectClass.cast(Util.loadXML(objectClass, filePathName));
+		Object loaded = objectClass.cast(Util
+				.loadXML(objectClass, filePathName));
 		Object loadedInstance = null;
 		try {
 			loadedInstance = objectClass.newInstance();
@@ -171,7 +169,7 @@ public abstract class Agent {
 			if (scale_diff < 25) {
 				if (shot.getDx() < 0) {
 					aRobot.cshoot(shot);
-					listObjects.add(shot);
+					this.onShotFinish(shot);
 					state = aRobot.getState();
 
 					if (state == GameState.PLAYING) {
