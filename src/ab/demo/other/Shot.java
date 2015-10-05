@@ -30,6 +30,7 @@ public class Shot implements Serializable {
 	private int t_tap;
 	private int releasePointX;
 	private int releasePointY;
+	private int score;
 
 	public Shot() {
 		x = 0;
@@ -78,6 +79,15 @@ public class Shot implements Serializable {
 		this.t_tap = t_tap;
 		this.releasePointX = releasePoint.x;
 		this.releasePointY = releasePoint.y;
+	}
+
+	@XmlAttribute
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	@XmlAttribute
