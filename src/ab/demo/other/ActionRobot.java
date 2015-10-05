@@ -167,7 +167,6 @@ public class ActionRobot {
 		LinkedList<Shot> shots = new LinkedList<Shot>();
 		shots.add(shot);
 		ss.shoot(proxy, shots);
-		// System.out.println(" tap time : " + shot.getT_tap());
 		System.out.println("Shooting Completed");
 
 	}
