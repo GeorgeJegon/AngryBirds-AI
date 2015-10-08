@@ -9,174 +9,217 @@
 package ab.demo.other;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import ab.planner.TrajectoryPlanner;
 
 @XmlRootElement
 public class Shot implements Serializable {
 
-	/**
+  /**
 	 * 
 	 */
-	private static final long serialVersionUID = 2279112400720899118L;
+  private TrajectoryPlanner trajectoryPlanner = new TrajectoryPlanner();
+  private static final long serialVersionUID  = 2279112400720899118L;
 
-	private int x;
-	private int y;
-	private int dx;
-	private int dy;
-	private int t_shot;
-	private int t_tap;
-	private int releasePointX;
-	private int releasePointY;
-	private int score;
+  private int               x;
+  private int               y;
+  private int               dx;
+  private int               dy;
+  private int               t_shot;
+  private int               t_tap;
+  private int               releasePointX;
+  private int               releasePointY;
+  private int               score;
+  private double            theta;
+  private double            velocity;
 
-	public Shot() {
-		x = 0;
-		y = 0;
-		dx = 0;
-		dy = 0;
-		t_shot = 0;
-		t_tap = 0;
-	}
+  public Shot() {
+    x = 0;
+    y = 0;
+    dx = 0;
+    dy = 0;
+    t_shot = 0;
+    t_tap = 0;
+  }
 
-	public Shot(int x, int y, int t_shot, int t_tap) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.t_shot = t_shot;
-		this.t_tap = t_tap;
-	}
+  public Shot(int x, int y, int t_shot, int t_tap) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.t_shot = t_shot;
+    this.t_tap = t_tap;
+  }
 
-	public Shot(int x, int y, int dx, int dy, int t_shot) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
-		this.t_shot = t_shot;
-	}
+  public Shot(int x, int y, int dx, int dy, int t_shot) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.t_shot = t_shot;
+  }
 
-	public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
-		this.t_shot = t_shot;
-		this.t_tap = t_tap;
-	}
+  public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.t_shot = t_shot;
+    this.t_tap = t_tap;
+  }
 
-	public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap,
-			Point releasePoint) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.dx = dx;
-		this.dy = dy;
-		this.t_shot = t_shot;
-		this.t_tap = t_tap;
-		this.releasePointX = releasePoint.x;
-		this.releasePointY = releasePoint.y;
-	}
+  public Shot(int x, int y, int dx, int dy, int t_shot, int t_tap,
+      Point releasePoint) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.t_shot = t_shot;
+    this.t_tap = t_tap;
+    this.handlerReleasePoint(releasePoint);
+  }
 
-	@XmlAttribute
-	public int getScore() {
-		return score;
-	}
+  private void handlerReleasePoint(Point releasePoint) {
+    double thetaAngle = this.trajectoryPlanner.getReleaseAngle(new Rectangle(
+        this.x, this.y), releasePoint);
+    double velocity = this.trajectoryPlanner.getVelocity(thetaAngle);
 
-	public void setScore(int score) {
-		this.score = score;
-	}
+    this.setReleasePointX(releasePoint.x);
+    this.setReleasePointY(releasePoint.y);
+    this.setTheta(thetaAngle);
+    this.setVelocity(velocity);
+  }
 
-	@XmlAttribute
-	public int getDx() {
-		return dx;
-	}
+  @XmlAttribute
+  public double getVelocity() {
+    return this.velocity;
+  }
 
-	public void setDx(int dx) {
-		this.dx = dx;
-	}
+  public void setVelocity(double velocity) {
+    this.velocity = velocity;
+  }
 
-	@XmlAttribute
-	public int getDy() {
-		return dy;
-	}
+  @XmlAttribute(name = "theta")
+  public double getThetaDegrees() {
+    return Math.toDegrees(this.theta);
+  }
 
-	public void setDy(int dy) {
-		this.dy = dy;
-	}
+  public void setThetaDegrees(double theta) {
+    this.theta = Math.toRadians(theta);
+  }
 
-	@XmlAttribute
-	public int getX() {
-		return x;
-	}
+  @XmlTransient
+  public double getTheta() {
+    return this.theta;
+  }
 
-	public void setX(int x) {
-		this.x = x;
-	}
+  public void setTheta(double theta) {
+    this.theta = theta;
+  }
 
-	@XmlAttribute
-	public int getY() {
-		return y;
-	}
+  @XmlAttribute
+  public int getScore() {
+    return score;
+  }
 
-	public void setY(int y) {
-		this.y = y;
-	}
+  public void setScore(int score) {
+    this.score = score;
+  }
 
-	@XmlAttribute
-	public int getT_shot() {
-		return t_shot;
-	}
+  @XmlAttribute
+  public int getDx() {
+    return dx;
+  }
 
-	public void setT_shot(int t_shot) {
-		this.t_shot = t_shot;
-	}
+  public void setDx(int dx) {
+    this.dx = dx;
+  }
 
-	@XmlAttribute
-	public int getT_tap() {
-		return t_tap;
-	}
+  @XmlAttribute
+  public int getDy() {
+    return dy;
+  }
 
-	public void setT_tap(int t_tap) {
-		this.t_tap = t_tap;
-	}
+  public void setDy(int dy) {
+    this.dy = dy;
+  }
 
-	public Point getReleasePoint() {
-		return new Point(this.releasePointX, this.releasePointY);
-	}
+  @XmlAttribute
+  public int getX() {
+    return x;
+  }
 
-	@XmlAttribute
-	public int getReleasePointX() {
-		return this.releasePointX;
-	}
+  public void setX(int x) {
+    this.x = x;
+  }
 
-	public void setReleasePointX(int releasePointX) {
-		this.releasePointX = releasePointX;
-	}
+  @XmlAttribute
+  public int getY() {
+    return y;
+  }
 
-	@XmlAttribute
-	public int getReleasePointY() {
-		return this.releasePointY;
-	}
+  public void setY(int y) {
+    this.y = y;
+  }
 
-	public void setReleasePointY(int releasePointY) {
-		this.releasePointY = releasePointY;
-	}
+  @XmlAttribute
+  public int getT_shot() {
+    return t_shot;
+  }
 
-	public String toString() {
-		String result = "";
-		if (x == 0 && y == 0) {
-			if (t_tap != 0)
-				result += "tap at:  " + t_tap;
-		} else
-			result += "Shoot from: (" + (x + dx) + "  " + (y + dy) + " )"
-					+ " at time  " + t_shot;
+  public void setT_shot(int t_shot) {
+    this.t_shot = t_shot;
+  }
 
-		return result;
+  @XmlAttribute
+  public int getT_tap() {
+    return t_tap;
+  }
 
-	}
+  public void setT_tap(int t_tap) {
+    this.t_tap = t_tap;
+  }
+
+  public Point getReleasePoint() {
+    return new Point(this.releasePointX, this.releasePointY);
+  }
+
+  @XmlAttribute
+  public int getReleasePointX() {
+    return this.releasePointX;
+  }
+
+  public void setReleasePointX(int releasePointX) {
+    this.releasePointX = releasePointX;
+  }
+
+  @XmlAttribute
+  public int getReleasePointY() {
+    return this.releasePointY;
+  }
+
+  public void setReleasePointY(int releasePointY) {
+    this.releasePointY = releasePointY;
+  }
+
+  public String toString() {
+    String result = "";
+    if (x == 0 && y == 0) {
+      if (t_tap != 0)
+        result += "tap at:  " + t_tap;
+    } else
+      result += "Shoot from: (" + (x + dx) + "  " + (y + dy) + " )"
+          + " at time  " + t_shot;
+
+    return result;
+
+  }
 
 }
