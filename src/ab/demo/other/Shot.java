@@ -9,14 +9,13 @@
 package ab.demo.other;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-
+import javax.xml.bind.annotation.XmlTransient;
 import ab.planner.TrajectoryPlanner;
-
-import java.awt.Rectangle;
 
 @XmlRootElement
 public class Shot implements Serializable {
@@ -107,9 +106,18 @@ public class Shot implements Serializable {
     this.velocity = velocity;
   }
 
-  @XmlAttribute
-  public double getTheta() {
+  @XmlAttribute(name = "theta")
+  public double getThetaDegrees() {
     return Math.toDegrees(this.theta);
+  }
+
+  public void setThetaDegrees(double theta) {
+    this.theta = Math.toRadians(theta);
+  }
+
+  @XmlTransient
+  public double getTheta() {
+    return this.theta;
   }
 
   public void setTheta(double theta) {
