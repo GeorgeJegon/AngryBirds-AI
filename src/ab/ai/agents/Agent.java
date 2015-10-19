@@ -28,6 +28,7 @@ public abstract class Agent {
 
 	public int currentLevel = 1;
 	public static int time_limit = 12;
+	public int sleepTime = 3000;
 
 	public Agent() {
 		this.aRobot = new ActionRobot();
@@ -253,7 +254,7 @@ public abstract class Agent {
 		this.beforeLoadNextLevel();
 
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(this.sleepTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
