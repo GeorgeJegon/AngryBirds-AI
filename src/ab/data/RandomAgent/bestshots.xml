@@ -1,0 +1,39 @@
+<listBestShots>
+    <_bestShots level="1" score="28070">
+        <Shot dx="-186" dy="633" releasePointX="7" releasePointY="961" score="16670" tShot="0" tTap="0" theta="83.92321796835634" velocity="2.7436499999999997" x="193" y="328"/>
+    </_bestShots>
+    <_bestShots level="2" score="42660">
+        <Shot dx="-553" dy="174" releasePointX="-345" releasePointY="489" score="-8030" tShot="0" tTap="0" theta="38.25290707325302" velocity="2.80395" x="208" y="315"/>
+        <Shot dx="-175" dy="553" releasePointX="33" releasePointY="868" score="10820" tShot="0" tTap="0" theta="84.46746370434595" velocity="2.7436499999999997" x="208" y="315"/>
+        <Shot dx="-568" dy="115" releasePointX="-360" releasePointY="430" score="0" tShot="0" tTap="0" theta="32.447215818745576" velocity="2.8240499999999997" x="208" y="315"/>
+        <Shot dx="-568" dy="115" releasePointX="-360" releasePointY="430" score="540" tShot="0" tTap="0" theta="32.447215818745576" velocity="2.8240499999999997" x="208" y="315"/>
+    </_bestShots>
+    <_bestShots level="3" score="33270">
+        <Shot dx="-229" dy="510" releasePointX="-59" releasePointY="846" score="-17220" tShot="0" tTap="0" theta="78.92979742206063" velocity="2.7436499999999997" x="170" y="336"/>
+        <Shot dx="-518" dy="211" releasePointX="-348" releasePointY="547" score="27830" tShot="0" tTap="1228" theta="45.263427015153084" velocity="2.7868649999999997" x="170" y="336"/>
+    </_bestShots>
+    <_bestShots level="4" score="10550">
+        <Shot dx="-196" dy="588" releasePointX="-1" releasePointY="919" score="-31060" tShot="0" tTap="0" theta="82.95503048129412" velocity="2.7436499999999997" x="195" y="331"/>
+        <Shot dx="-195" dy="588" releasePointX="0" releasePointY="919" score="700" tShot="0" tTap="0" theta="83.0262064410373" velocity="2.7436499999999997" x="195" y="331"/>
+        <Shot dx="-592" dy="182" releasePointX="-397" releasePointY="513" score="1080" tShot="0" tTap="0" theta="38.07517773338492" velocity="2.80395" x="195" y="331"/>
+        <Shot dx="-592" dy="181" releasePointX="-397" releasePointY="512" score="6560" tShot="0" tTap="0" theta="38.003233642865666" velocity="2.80395" x="195" y="331"/>
+    </_bestShots>
+    <_bestShots level="5" score="58030">
+        <Shot dx="-212" dy="528" releasePointX="-25" releasePointY="863" score="17270" tShot="0" tTap="0" theta="80.96394049708373" velocity="2.7436499999999997" x="187" y="335"/>
+    </_bestShots>
+    <_bestShots level="6" score="15670">
+        <Shot dx="-194" dy="546" releasePointX="-9" releasePointY="881" score="-26620" tShot="0" tTap="0" theta="82.43988107042472" velocity="2.7436499999999997" x="185" y="335"/>
+        <Shot dx="-545" dy="196" releasePointX="-360" releasePointY="531" score="1450" tShot="0" tTap="0" theta="42.2799977243586" velocity="2.80395" x="185" y="335"/>
+        <Shot dx="-545" dy="198" releasePointX="-360" releasePointY="533" score="6220" tShot="0" tTap="0" theta="42.41847038644436" velocity="2.80395" x="185" y="335"/>
+        <Shot dx="-493" dy="304" releasePointX="-308" releasePointY="639" score="6800" tShot="0" tTap="0" theta="52.37809470888794" velocity="2.7768149999999996" x="185" y="335"/>
+    </_bestShots>
+    <_bestShots level="7" score="24580">
+        <Shot dx="-235" dy="508" releasePointX="-65" releasePointY="844" score="-9500" tShot="0" tTap="0" theta="78.45008660676406" velocity="2.7436499999999997" x="170" y="336"/>
+        <Shot dx="-239" dy="506" releasePointX="-69" releasePointY="842" score="7620" tShot="0" tTap="0" theta="78.11923176747074" velocity="2.7436499999999997" x="170" y="336"/>
+        <Shot dx="-477" dy="292" releasePointX="-307" releasePointY="628" score="1200" tShot="0" tTap="0" theta="52.88313931672973" velocity="2.7768149999999996" x="170" y="336"/>
+        <Shot dx="-476" dy="294" releasePointX="-306" releasePointY="630" score="0" tShot="0" tTap="0" theta="53.0596495405857" velocity="2.7587249999999996" x="170" y="336"/>
+        <Shot dx="-476" dy="294" releasePointX="-306" releasePointY="630" score="0" tShot="0" tTap="0" theta="53.0596495405857" velocity="2.7587249999999996" x="170" y="336"/>
+        <Shot dx="-476" dy="294" releasePointX="-306" releasePointY="630" score="0" tShot="0" tTap="0" theta="53.0596495405857" velocity="2.7587249999999996" x="170" y="336"/>
+        <Shot dx="-476" dy="294" releasePointX="-306" releasePointY="630" score="9590" tShot="0" tTap="0" theta="53.0596495405857" velocity="2.7587249999999996" x="170" y="336"/>
+    </_bestShots>
+</listBestShots>
