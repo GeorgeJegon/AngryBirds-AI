@@ -1,5 +1,6 @@
 package ab.ai.agents;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import ab.ai.Level;
@@ -33,21 +34,28 @@ public class MaxScoreLevel extends Agent implements Runnable {
 
   @Override
   protected GameState solve() {
+    this.aRobot.click();
+    try {
+      Thread.sleep(5000);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     BufferedImage screenshot = ActionRobot.doScreenShot();
     Vision vision = new Vision(screenshot);
     Level level = new Level();
-
+    
     if (this.currentLevel > this.listLevel.size()) {
       level.setId(this.currentLevel);
-      level.setNumber_of_birds(vision.findBirdsRealShape().size());
-      level.setNumber_of_blocks(vision.findBlocksRealShape().size());
-      level.setNumber_of_pigs(vision.findPigsRealShape().size());
+      level.setNumber_of_birds(vision.findBirdsMBR().size());
+      level.setNumber_of_blocks(vision.findBlocksMBR().size());
+      level.setNumber_of_pigs(vision.findPigsMBR().size());
       level.setNumber_of_tnts(vision.findTNTs().size());
       level.defineMaxScoreAvaliable();
 
       this.listLevel.addLevel(level);
     } else {
-      System.out.println("Já temos informações sobre este level");
+      System.out.println("Jï¿½ temos informaï¿½ï¿½es sobre este level");
     }
 
     return GameState.WON;
