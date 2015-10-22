@@ -41,6 +41,12 @@ public abstract class Agent {
   }
 
   protected void showTrajectory(BufferedImage screenshot, Rectangle sling,
+      Point releasePoint, String fileNamePath) {
+    this.tp.plotTrajectory(screenshot, sling, releasePoint);
+    Util.saveImage(screenshot, fileNamePath);
+  }
+
+  protected void showTrajectory(BufferedImage screenshot, Rectangle sling,
       Point releasePoint) {
     this.tp.plotTrajectory(screenshot, sling, releasePoint);
 
@@ -53,7 +59,7 @@ public abstract class Agent {
 
   protected void showTrajectory(Rectangle sling, Point releasePoint) {
     BufferedImage screenshot = ActionRobot.doScreenShot();
-    showTrajectory(screenshot, sling, releasePoint);
+    this.showTrajectory(screenshot, sling, releasePoint);
   }
 
   public void run() {
