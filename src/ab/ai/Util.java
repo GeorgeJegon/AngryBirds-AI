@@ -1,5 +1,6 @@
 package ab.ai;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -19,130 +21,137 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.commons.codec.Charsets;
 
 public class Util {
-	// Save XML
-	public static void saveXML(Object object, String fileNamePath,
-			Boolean append) {
-		Marshaller marshaller = createMarshaller(object);
-		FileWriter fileWriter;
-		try {
-			fileWriter = new FileWriter(fileNamePath, append);
-			if (append) {
-				fileWriter.append(System.getProperty("line.separator"));
-			}
-			marshaller.marshal(object, fileWriter);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+  public static void saveImage(BufferedImage image, String fileNamePath) {
+    try {
+      ImageIO.write(image, "png", new File(fileNamePath));
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
-	public static void saveXML(Object object, String fileNamePath) {
-		saveXML(object, fileNamePath, false);
-	}
+  // Save XML
+  public static void saveXML(Object object, String fileNamePath, Boolean append) {
+    Marshaller marshaller = createMarshaller(object);
+    FileWriter fileWriter;
+    try {
+      fileWriter = new FileWriter(fileNamePath, append);
+      if (append) {
+        fileWriter.append(System.getProperty("line.separator"));
+      }
+      marshaller.marshal(object, fileWriter);
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (JAXBException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
-	public static void saveXML(Object object) {
-		Marshaller marshaller = createMarshaller(object);
-		try {
-			marshaller.marshal(object, System.out);
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+  public static void saveXML(Object object, String fileNamePath) {
+    saveXML(object, fileNamePath, false);
+  }
 
-	// Load XML
-	public static List<?> loadXMLFileByLine(Object object, String fileNamePath) {
-		List<Object> loaded = new ArrayList<Object>();
-		Object loadedObject = null;
-		try {
-			List<String> lines = Files.readAllLines(Paths.get(fileNamePath),
-					Charsets.UTF_8);
+  public static void saveXML(Object object) {
+    Marshaller marshaller = createMarshaller(object);
+    try {
+      marshaller.marshal(object, System.out);
+    } catch (JAXBException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
-			for (String line : lines) {
-				loadedObject = Util.loadXMLFromString(object, line);
-				if (loadedObject != null) {
-					loaded.add(loadedObject);
-				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return loaded;
-	}
+  // Load XML
+  public static List<?> loadXMLFileByLine(Object object, String fileNamePath) {
+    List<Object> loaded = new ArrayList<Object>();
+    Object loadedObject = null;
+    try {
+      List<String> lines = Files.readAllLines(Paths.get(fileNamePath),
+          Charsets.UTF_8);
 
-	public static Object loadXMLFromString(Object object, String line) {
-		Unmarshaller unmarshaller = createUnmarshaller(object);
-		Object loaded = null;
-		StringReader stringReader = new StringReader(line);
-		if (!line.isEmpty()) {
-			try {
-				loaded = unmarshaller.unmarshal(stringReader);
-			} catch (JAXBException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return loaded;
-	}
+      for (String line : lines) {
+        loadedObject = Util.loadXMLFromString(object, line);
+        if (loadedObject != null) {
+          loaded.add(loadedObject);
+        }
+      }
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return loaded;
+  }
 
-	public static Object loadXML(Object object, String fileNamePath) {
-		Unmarshaller unmarshaller = createUnmarshaller(object);
-		Object loaded = null;
-		File fileXML = new File(fileNamePath);
+  public static Object loadXMLFromString(Object object, String line) {
+    Unmarshaller unmarshaller = createUnmarshaller(object);
+    Object loaded = null;
+    StringReader stringReader = new StringReader(line);
+    if (!line.isEmpty()) {
+      try {
+        loaded = unmarshaller.unmarshal(stringReader);
+      } catch (JAXBException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    return loaded;
+  }
 
-		if (fileXML.length() > 0) {
-			try {
-				loaded = unmarshaller.unmarshal(new FileReader(fileNamePath));
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JAXBException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+  public static Object loadXML(Object object, String fileNamePath) {
+    Unmarshaller unmarshaller = createUnmarshaller(object);
+    Object loaded = null;
+    File fileXML = new File(fileNamePath);
 
-		return loaded;
-	}
+    if (fileXML.length() > 0) {
+      try {
+        loaded = unmarshaller.unmarshal(new FileReader(fileNamePath));
+      } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      } catch (JAXBException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
 
-	@SuppressWarnings("rawtypes")
-	private static Unmarshaller createUnmarshaller(Object object) {
-		Class objectClass = object.getClass();
+    return loaded;
+  }
 
-		if (objectClass.getSimpleName().equals("Class")) {
-			objectClass = (Class) object;
-		}
+  @SuppressWarnings("rawtypes")
+  private static Unmarshaller createUnmarshaller(Object object) {
+    Class objectClass = object.getClass();
 
-		JAXBContext context;
-		Unmarshaller unmarshaller = null;
-		try {
-			context = JAXBContext.newInstance(objectClass);
-			unmarshaller = context.createUnmarshaller();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    if (objectClass.getSimpleName().equals("Class")) {
+      objectClass = (Class) object;
+    }
 
-		return unmarshaller;
-	}
+    JAXBContext context;
+    Unmarshaller unmarshaller = null;
+    try {
+      context = JAXBContext.newInstance(objectClass);
+      unmarshaller = context.createUnmarshaller();
+    } catch (JAXBException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
-	private static Marshaller createMarshaller(Object object) {
-		JAXBContext context;
-		Marshaller marshaller = null;
-		try {
-			context = JAXBContext.newInstance(object.getClass());
-			marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-					Boolean.TRUE);
-			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return marshaller;
-	}
+    return unmarshaller;
+  }
+
+  private static Marshaller createMarshaller(Object object) {
+    JAXBContext context;
+    Marshaller marshaller = null;
+    try {
+      context = JAXBContext.newInstance(object.getClass());
+      marshaller = context.createMarshaller();
+      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+      marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+    } catch (JAXBException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return marshaller;
+  }
 }
