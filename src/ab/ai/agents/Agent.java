@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import ab.ai.Util;
+import ab.utils.ABUtil;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
 import ab.planner.TrajectoryPlanner;
@@ -108,6 +109,30 @@ public abstract class Agent {
 
   protected void saveKnowledge(Object object, String filePathName) {
     Util.saveXML(object, filePathName);
+  }
+
+  protected ABObject nearestPig(List<ABObject> listPigs) {
+    ABObject nearestPig = listPigs.get(0);
+    for (ABObject pig : listPigs) {
+      if (pig.getX() < nearestPig.getX()) {
+        nearestPig = pig;
+      }
+    }
+    return nearestPig;
+  }
+
+  protected ABObject highestPig(List<ABObject> listPigs) {
+    ABObject highestPig = listPigs.get(0);
+    for (ABObject pig : listPigs) {
+      if (pig.getY() < highestPig.getY()) {
+        highestPig = pig;
+      }
+    }
+    return highestPig;
+  }
+
+  protected ABObject getSupport(ABObject object, List<ABObject> listObject) {
+    return ABUtil.getSupporters(object, listObject).get(0);
   }
 
   @SuppressWarnings("rawtypes")
