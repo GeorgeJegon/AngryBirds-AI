@@ -17,8 +17,6 @@ import ab.vision.GameStateExtractor.GameState;
 import ab.vision.Vision;
 
 public abstract class Agent {
-  private final String        SHOTS_FILE   = "src/ab/data/shots.xml";
-  private final String        MATCHES_FILE = "src/ab/data/matches.xml";
   private ImageSegFrame       frame        = null;
 
   protected ActionRobot       aRobot;
