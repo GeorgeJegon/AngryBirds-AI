@@ -18,7 +18,7 @@ import ab.vision.GameStateExtractor.GameState;
 import ab.vision.Vision;
 
 public abstract class Agent {
-  private ImageSegFrame       frame        = null;
+  private ImageSegFrame       frame;
 
   protected ActionRobot       aRobot;
   protected Random            randomGenerator;
@@ -26,6 +26,7 @@ public abstract class Agent {
   protected TrajectoryPlanner tp;
   protected boolean           firstShot;
   protected Point             prevTarget;
+  protected List<Shot>        listShots;
 
   public int                  currentLevel = 1;
   public static int           time_limit   = 12;
@@ -35,30 +36,10 @@ public abstract class Agent {
     this.aRobot = new ActionRobot();
     this.tp = new TrajectoryPlanner();
     this.prevTarget = null;
+    this.frame = null;
     this.firstShot = true;
+    this.listShots = new ArrayList<Shot>();
     this.randomGenerator = new Random();
-  }
-
-  protected void showTrajectory(BufferedImage screenshot, Rectangle sling,
-      Point releasePoint, String fileNamePath) {
-    this.tp.plotTrajectory(screenshot, sling, releasePoint);
-    Util.saveImage(screenshot, fileNamePath);
-  }
-
-  protected void showTrajectory(BufferedImage screenshot, Rectangle sling,
-      Point releasePoint) {
-    this.tp.plotTrajectory(screenshot, sling, releasePoint);
-
-    if (this.frame == null) {
-      this.frame = new ImageSegFrame("trajectory", screenshot);
-    } else {
-      this.frame.refresh(screenshot);
-    }
-  }
-
-  protected void showTrajectory(Rectangle sling, Point releasePoint) {
-    BufferedImage screenshot = ActionRobot.doScreenShot();
-    this.showTrajectory(screenshot, sling, releasePoint);
   }
 
   public void run() {
@@ -106,6 +87,48 @@ public abstract class Agent {
   protected abstract void afterLoadNextLevel();
 
   protected abstract void onShotFinish(Shot currentShot);
+
+  protected void showTrajectory(BufferedImage screenshot, Rectangle sling,
+      Point releasePoint, String fileNamePath) {
+    this.tp.plotTrajectory(screenshot, sling, releasePoint);
+    Util.saveImage(screenshot, fileNamePath);
+  }
+
+  protected void showTrajectory(BufferedImage screenshot, Rectangle sling,
+      Point releasePoint) {
+    this.tp.plotTrajectory(screenshot, sling, releasePoint);
+
+    if (this.frame == null) {
+      this.frame = new ImageSegFrame("trajectory", screenshot);
+    } else {
+      this.frame.refresh(screenshot);
+    }
+
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  protected void showTrajectory(Rectangle sling, Point releasePoint) {
+    BufferedImage screenshot = ActionRobot.doScreenShot();
+    this.showTrajectory(screenshot, sling, releasePoint);
+  }
+
+  protected Boolean waitForSling(Vision vision, Rectangle sling,
+      BufferedImage screenshot) {
+    while (sling == null && this.aRobot.getState() == GameState.PLAYING) {
+      System.out
+          .println("No slingshot detected. Please remove pop up or zoom out");
+      ActionRobot.fullyZoomOut();
+      screenshot = ActionRobot.doScreenShot();
+      vision = new Vision(screenshot);
+      sling = vision.findSlingshotMBR();
+    }
+
+    return sling != null;
+  }
 
   protected void saveKnowledge(Object object, String filePathName) {
     Util.saveXML(object, filePathName);
@@ -274,7 +297,15 @@ public abstract class Agent {
 
   protected void onLostState() {
     System.out.println("Restart");
+    this.resetLevelInformation();
+    
     aRobot.restartLevel();
+  }
+
+  private void resetLevelInformation() {
+    this.firstShot = true;
+    this.listShots.clear();
+    this.prevTarget = null;
   }
 
   private void onEpisodeMenuState() {
@@ -305,8 +336,8 @@ public abstract class Agent {
 
     aRobot.loadLevel(++currentLevel);
     tp = new TrajectoryPlanner();
-    firstShot = true;
-
+    
+    this.resetLevelInformation();
     this.afterLoadNextLevel();
   }
 }
