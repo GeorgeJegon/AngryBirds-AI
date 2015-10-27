@@ -296,15 +296,19 @@ public abstract class Agent {
   }
 
   protected void onLostState() {
+    this.beforeRestartLevel();
+
     System.out.println("Restart");
     this.resetLevelInformation();
-    
+
     aRobot.restartLevel();
+    this.afterRestartLevel();
   }
 
   private void resetLevelInformation() {
     this.firstShot = true;
     this.listShots.clear();
+    this.aRobot.current_score = 0;
     this.prevTarget = null;
   }
 
@@ -336,7 +340,7 @@ public abstract class Agent {
 
     aRobot.loadLevel(++currentLevel);
     tp = new TrajectoryPlanner();
-    
+
     this.resetLevelInformation();
     this.afterLoadNextLevel();
   }
