@@ -4,14 +4,16 @@ import ab.vision.ABObject;
 import ab.vision.Vision;
 
 public abstract class Heuristic {
-  private int frequency;
-  private int badDecreaseRate;
+  private int             frequency;
+  private int             badDecreaseRate;
+
+  public final static int HEURISTIC_VALUE = 100;
 
   public Heuristic() {
-    this.frequency = 100;
+    this.frequency = HEURISTIC_VALUE;
     this.badDecreaseRate = 1;
   }
-  
+
   public abstract ABObject solve(Vision vision);
 
   public void bad() {
@@ -37,4 +39,6 @@ public abstract class Heuristic {
   public void setBadDecreaseRate(int badDecreaseRate) {
     this.badDecreaseRate = badDecreaseRate;
   }
+
+  public abstract int getHeuristicID();
 }
