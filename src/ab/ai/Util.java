@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import org.apache.commons.codec.Charsets;
 public class Util {
   public static void saveImage(BufferedImage image, String fileNamePath) {
     try {
-      ImageIO.write(image, "png", new File(fileNamePath));
+      ImageIO.write(image, "png", createFile(fileNamePath));
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -33,9 +34,10 @@ public class Util {
   // Save XML
   public static void saveXML(Object object, String fileNamePath, Boolean append) {
     Marshaller marshaller = createMarshaller(object);
+    File file = createFile(fileNamePath);
     FileWriter fileWriter;
     try {
-      fileWriter = new FileWriter(fileNamePath, append);
+      fileWriter = new FileWriter(file, append);
       if (append) {
         fileWriter.append(System.getProperty("line.separator"));
       }
@@ -102,7 +104,7 @@ public class Util {
   public static Object loadXML(Object object, String fileNamePath) {
     Unmarshaller unmarshaller = createUnmarshaller(object);
     Object loaded = null;
-    File fileXML = new File(fileNamePath);
+    File fileXML = createFile(fileNamePath);
 
     if (fileXML.length() > 0) {
       try {
@@ -117,6 +119,22 @@ public class Util {
     }
 
     return loaded;
+  }
+
+  private static File createFile(String fileNamePath) {
+    File file = new File(fileNamePath);
+    
+    if (!file.exists()){
+      file.getParentFile().mkdirs();
+      try {
+        file.createNewFile();
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+
+    return file;
   }
 
   @SuppressWarnings("rawtypes")
