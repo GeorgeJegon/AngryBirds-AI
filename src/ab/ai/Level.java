@@ -2,8 +2,11 @@ package ab.ai;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
+@XmlType(propOrder = { "id", "number_of_birds", "number_of_pigs",
+    "number_of_blocks", "number_of_tnts", "max_score_avaliable" })
 public class Level {
   private int id;
   private int number_of_pigs;
@@ -28,10 +31,10 @@ public class Level {
   }
 
   private int calcMaxScoreAvaliable() {
-    return 10000 * (this.number_of_tnts + this.number_of_birds - 1) + (5000
-        * this.number_of_pigs) + (500 * this.number_of_blocks);
+    return 10000 * (this.number_of_tnts + this.number_of_birds - 1)
+        + (5000 * this.number_of_pigs) + (500 * this.number_of_blocks);
   }
-  
+
   public void defineMaxScoreAvaliable() {
     this.max_score_avaliable = this.calcMaxScoreAvaliable();
   }
