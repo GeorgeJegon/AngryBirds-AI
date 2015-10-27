@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import ab.ai.Match;
 import ab.ai.Util;
 import ab.ai.Heuristics.Heuristic;
+import ab.ai.Heuristics.HeuristicHandler;
+import ab.ai.Heuristics.HighTrajectoryHeuristic;
 import ab.ai.Heuristics.RandomObject;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
@@ -16,6 +18,7 @@ import ab.vision.Vision;
 
 public class FMUAgent extends Agent implements Runnable {
   private static final String MATCHES_FILE = "src/ab/data/FMUAgent/matches.xml";
+  private HeuristicHandler    heuristicHandler;
 
   public FMUAgent() {
     super();
@@ -32,7 +35,8 @@ public class FMUAgent extends Agent implements Runnable {
     this.aRobot.click();
     ActionRobot.fullyZoomOut();
     GameState state = this.aRobot.getState();
-    Heuristic heuristic = new RandomObject();
+
+    Heuristic heuristic = null;
 
     BufferedImage screenshot = ActionRobot.doScreenShot();
     Vision vision = new Vision(screenshot);
@@ -41,10 +45,22 @@ public class FMUAgent extends Agent implements Runnable {
     ABObject target = null;
     Point objectCenter = null;
     Point releasePoint = null;
+    
+    if (this.listShots.size() <= 0) {
+      heuristicHandler = new HeuristicHandler();
+      heuristicHandler.setLevel(this.currentLevel);
+      heuristicHandler.add(new RandomObject());
+      heuristicHandler.add(new HighTrajectoryHeuristic());
+    }
 
     if (this.waitForSling(vision, sling, screenshot)) {
       state = this.aRobot.getState();
 
+      heuristic = heuristicHandler.randomPick();
+
+      System.out.println("Tentando resolver o level " + this.currentLevel
+          + " usando o " + (this.listShots.size() + 1)
+          + "tiro e a heuristica (" + heuristic.getHeuristicID() + ")");
 
       target = heuristic.solve(vision);
       objectCenter = target.getCenter();
@@ -66,7 +82,7 @@ public class FMUAgent extends Agent implements Runnable {
   protected void saveMatch(GameState state) {
     Match match = new Match();
     int score = this.aRobot.current_score;
-    
+
     if (state == GameState.WON) {
       score = this.aRobot.getScore();
     }
@@ -75,7 +91,7 @@ public class FMUAgent extends Agent implements Runnable {
     match.setScore(score);
     match.setShots(this.listShots);
     match.setType(state.toString());
-    
+
     Util.saveXML(match, MATCHES_FILE, true);
   }
 
