@@ -40,5 +40,9 @@ public abstract class Heuristic {
     this.badDecreaseRate = badDecreaseRate;
   }
 
+  public String getName() {
+    return this.getClass().getSimpleName();
+  }
+
   public abstract int getHeuristicID();
 }
