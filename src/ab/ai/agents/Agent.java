@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import ab.ai.Util;
+import ab.ai.Heuristics.Heuristic;
 import ab.utils.ABUtil;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
@@ -27,6 +28,7 @@ public abstract class Agent {
   protected boolean           firstShot;
   protected Point             prevTarget;
   protected List<Shot>        listShots;
+  protected Heuristic         currentHeuristic;
 
   public int                  currentLevel = 1;
   public static int           time_limit   = 12;
