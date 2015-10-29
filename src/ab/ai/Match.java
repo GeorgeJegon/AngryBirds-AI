@@ -17,6 +17,7 @@ public class Match {
   private int        score;
   private String     type;
   private List<Shot> shots;
+  private String     heuristic;
 
   public Match() {
     id = UUID.randomUUID();
@@ -48,6 +49,15 @@ public class Match {
 
   public void setLevel(int level) {
     this.level = level;
+  }
+
+  @XmlAttribute
+  public String getHeuristic() {
+    return heuristic;
+  }
+
+  public void setHeuristic(String heuristic) {
+    this.heuristic = heuristic;
   }
 
   @XmlAttribute
