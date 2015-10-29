@@ -18,10 +18,20 @@ public class RandomObject extends Heuristic {
   @Override
   public ABObject solve(Vision vision) {
     List<ABObject> listObjects = new ArrayList<ABObject>();
+    ABObject target = null;
+    
     listObjects.addAll(vision.findBlocksRealShape());
     listObjects.addAll(vision.findPigsRealShape());
+    
+    target = listObjects.get(this.randomGenerator.nextInt(listObjects.size())); 
+    
+    return target;
+  }
 
-    return listObjects.get(this.randomGenerator.nextInt(listObjects.size()));
+  @Override
+  public int getHeuristicID() {
+    // TODO Auto-generated method stub
+    return 0;
   }
 
 }
