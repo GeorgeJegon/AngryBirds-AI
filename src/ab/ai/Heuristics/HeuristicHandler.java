@@ -70,10 +70,10 @@ public class HeuristicHandler {
     int index = 1;
     int totalDiff = 0;
     int currentHeuristicLimit = 0;
-    
+
     for (Heuristic h : this.heuristics) {
-      currentHeuristicLimit = index * h.getFrequency();
       totalDiff += Heuristic.HEURISTIC_VALUE - h.getFrequency();
+      currentHeuristicLimit = index * Heuristic.HEURISTIC_VALUE;
       if ((currentHeuristicLimit - totalDiff) > selectedIndex) {
         return h;
       }
