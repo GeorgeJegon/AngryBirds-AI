@@ -1,8 +1,15 @@
 package ab.ai.Heuristics;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
 import ab.vision.ABObject;
 import ab.vision.Vision;
 
+@XmlRootElement
+@XmlType(propOrder = { "name", "frequency"})
 public abstract class Heuristic {
   private int             frequency;
   private int             badDecreaseRate;
@@ -24,6 +31,7 @@ public abstract class Heuristic {
     this.frequency -= number_to_decrease;
   }
 
+  @XmlAttribute
   public int getFrequency() {
     return frequency;
   }
@@ -32,6 +40,7 @@ public abstract class Heuristic {
     this.frequency = frequency;
   }
 
+  @XmlTransient
   public int getBadDecreaseRate() {
     return badDecreaseRate;
   }
@@ -39,7 +48,8 @@ public abstract class Heuristic {
   public void setBadDecreaseRate(int badDecreaseRate) {
     this.badDecreaseRate = badDecreaseRate;
   }
-
+  
+  @XmlAttribute
   public String getName() {
     return this.getClass().getSimpleName();
   }
