@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class HeuristicHandler {
   private int             level;
   private List<Heuristic> heuristics;
@@ -15,6 +19,7 @@ public class HeuristicHandler {
     this.randomGenerator = new Random(123456789L);
   }
 
+  @XmlAttribute
   public int getLevel() {
     return level;
   }
@@ -31,6 +36,7 @@ public class HeuristicHandler {
     this.heuristics = heuristics;
   }
 
+  @XmlAttribute
   public int getMaxFrequency() {
     return maxFrequency;
   }
