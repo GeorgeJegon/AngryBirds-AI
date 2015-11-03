@@ -6,8 +6,7 @@ import java.awt.image.BufferedImage;
 
 import ab.ai.Match;
 import ab.ai.Util;
-import ab.ai.Heuristics.Heuristic;
-import ab.ai.Heuristics.HeuristicHandler;
+import ab.ai.Heuristics.BuildingHeuristic;
 import ab.ai.Heuristics.HighTrajectoryHeuristic;
 import ab.ai.Heuristics.RandomObject;
 import ab.demo.other.ActionRobot;
@@ -18,7 +17,6 @@ import ab.vision.Vision;
 
 public class FMUAgent extends Agent implements Runnable {
   private static final String MATCHES_FILE = "src/ab/data/FMUAgent/matches.xml";
-  private HeuristicHandler    heuristicHandler;
 
   public FMUAgent() {
     super();
@@ -30,13 +28,18 @@ public class FMUAgent extends Agent implements Runnable {
     agent.run();
   }
 
+  protected void onStartLevel() {
+    this.currentHeuristicHandler.setLevel(this.currentLevel);
+    this.currentHeuristicHandler.add(new RandomObject());
+
+    this.currentHeuristic = this.currentHeuristicHandler.randomPick();
+  }
+
   @Override
   protected GameState solve() {
     this.aRobot.click();
     ActionRobot.fullyZoomOut();
     GameState state = this.aRobot.getState();
-
-    Heuristic heuristic = null;
 
     BufferedImage screenshot = ActionRobot.doScreenShot();
     Vision vision = new Vision(screenshot);
@@ -45,24 +48,15 @@ public class FMUAgent extends Agent implements Runnable {
     ABObject target = null;
     Point objectCenter = null;
     Point releasePoint = null;
-    
-    if (this.listShots.size() <= 0) {
-      heuristicHandler = new HeuristicHandler();
-      heuristicHandler.setLevel(this.currentLevel);
-      heuristicHandler.add(new RandomObject());
-      heuristicHandler.add(new HighTrajectoryHeuristic());
-    }
 
     if (this.waitForSling(vision, sling, screenshot)) {
       state = this.aRobot.getState();
 
-      heuristic = heuristicHandler.randomPick();
-
       System.out.println("Tentando resolver o level " + this.currentLevel
           + " usando o " + (this.listShots.size() + 1)
-          + "tiro e a heuristica (" + heuristic.getHeuristicID() + ")");
+          + " tiro e a heuristica (" + this.currentHeuristic.getName() + ")");
 
-      target = heuristic.solve(vision);
+      target = this.currentHeuristic.solve(vision);
       objectCenter = target.getCenter();
       releasePoint = getReleasePoint(sling, objectCenter);
 
@@ -85,10 +79,13 @@ public class FMUAgent extends Agent implements Runnable {
 
     if (state == GameState.WON) {
       score = this.aRobot.getScore();
+    } else {
+      this.currentHeuristic.bad();
     }
 
     match.setLevel(this.currentLevel);
     match.setScore(score);
+    match.setHeuristic(this.currentHeuristic.getName());
     match.setShots(this.listShots);
     match.setType(state.toString());
 
@@ -97,25 +94,21 @@ public class FMUAgent extends Agent implements Runnable {
 
   @Override
   protected void beforeRestartLevel() {
-    // TODO Auto-generated method stub
     this.saveMatch(GameState.LOST);
   }
 
   @Override
   protected void afterRestartLevel() {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   protected void beforeLoadNextLevel() {
-    // TODO Auto-generated method stub
     this.saveMatch(GameState.WON);
   }
 
   @Override
   protected void afterLoadNextLevel() {
-    // TODO Auto-generated method stub
 
   }
 
