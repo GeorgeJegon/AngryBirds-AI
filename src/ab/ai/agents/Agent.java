@@ -9,6 +9,7 @@ import java.util.Random;
 
 import ab.ai.Util;
 import ab.ai.Heuristics.Heuristic;
+import ab.ai.Heuristics.HeuristicHandler;
 import ab.utils.ABUtil;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
@@ -20,6 +21,7 @@ import ab.vision.Vision;
 
 public abstract class Agent {
   private ImageSegFrame       frame;
+  private final String DATA_PATH = "src/ab/data/";
 
   protected ActionRobot       aRobot;
   protected Random            randomGenerator;
@@ -29,6 +31,7 @@ public abstract class Agent {
   protected Point             prevTarget;
   protected List<Shot>        listShots;
   protected Heuristic         currentHeuristic;
+  protected HeuristicHandler  currentHeuristicHandler;
 
   public int                  currentLevel = 1;
   public static int           time_limit   = 12;
@@ -42,6 +45,7 @@ public abstract class Agent {
     this.firstShot = true;
     this.listShots = new ArrayList<Shot>();
     this.randomGenerator = new Random();
+    this.currentHeuristicHandler = new HeuristicHandler();
   }
 
   public void run() {
@@ -49,6 +53,10 @@ public abstract class Agent {
 
     while (true) {
       System.out.println("Execute level " + currentLevel);
+
+      if (this.listShots.isEmpty()) {
+        this.onStartLevel();
+      }
 
       GameState state = solve();
 
@@ -136,6 +144,10 @@ public abstract class Agent {
     Util.saveXML(object, filePathName);
   }
 
+  protected void onStartLevel() {
+
+  }
+
   protected ABObject nearestPig(List<ABObject> listPigs) {
     ABObject nearestPig = listPigs.get(0);
     for (ABObject pig : listPigs) {
@@ -167,10 +179,8 @@ public abstract class Agent {
     try {
       loadedInstance = objectClass.newInstance();
     } catch (InstantiationException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     } catch (IllegalAccessException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return (loaded != null) ? loaded : loadedInstance;
@@ -308,10 +318,14 @@ public abstract class Agent {
   }
 
   private void resetLevelInformation() {
+    this.saveHeuristicHandler();
+    
     this.firstShot = true;
     this.listShots.clear();
     this.aRobot.current_score = 0;
     this.prevTarget = null;
+    this.currentHeuristicHandler = new HeuristicHandler();
+    this.currentHeuristic = null;
   }
 
   private void onEpisodeMenuState() {
@@ -345,5 +359,13 @@ public abstract class Agent {
 
     this.resetLevelInformation();
     this.afterLoadNextLevel();
+  }
+  
+  private void saveHeuristicHandler(){
+    Util.saveXML(this.currentHeuristicHandler, this.getDataPath() + "heuristics.xml");
+  }
+  
+  private String getDataPath(){
+    return DATA_PATH + this.getClass().getSimpleName() + "/";
   }
 }
