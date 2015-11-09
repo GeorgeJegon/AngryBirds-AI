@@ -63,6 +63,9 @@ public class ABObject extends Rectangle {
     return new Point((int) getCenterX(), (int) getCenterY());
   }
 
+  public List<ABObject> getSupporters(List<ABObject> objects) {
+    return ABUtil.getSupporters(this, objects);
+  }
   public static void resetCounter() {
     counter = 0;
   }
