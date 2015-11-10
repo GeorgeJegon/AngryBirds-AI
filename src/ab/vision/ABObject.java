@@ -11,6 +11,7 @@ package ab.vision;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import ab.utils.ABUtil;
@@ -82,6 +83,7 @@ public class ABObject extends Rectangle {
   public List<ABObject> getSupporters(List<ABObject> objects) {
     return ABUtil.getSupporters(this, objects);
   }
+
   public List<ABObject> getBaseSupporters(List<ABObject> objects) {
     ArrayDeque<ABObject> queue = new ArrayDeque<ABObject>();
     List<ABObject> listSupport = new ArrayList<ABObject>();
@@ -100,6 +102,17 @@ public class ABObject extends Rectangle {
     }
 
     return baseSupport;
+  }
+
+  public boolean touches(ABObject object) {
+    if (this.x == object.x && this.y == object.y && this.width == object.width
+        && this.height == object.height) {
+      return false;
+    }
+
+    Area temp = (Area) this._shiftar.clone();
+    temp.intersect(object._shiftar);
+    return !temp.isEmpty();
   }
 
   public static void resetCounter() {
