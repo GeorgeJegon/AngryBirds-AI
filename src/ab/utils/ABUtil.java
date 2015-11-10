@@ -14,6 +14,29 @@ public class ABUtil {
   public static int                gap = 5;                      // vision
                                                                   // tolerance.
   private static TrajectoryPlanner tp  = new TrajectoryPlanner();
+  /**
+   * Adds 1 px to polygon realshape for the sake of touch method
+   */
+  public static Area resize(Polygon p) {
+    int shift = 2;
+
+    Polygon p1 = new Polygon(p.xpoints, p.ypoints, p.npoints);
+    Polygon p2 = new Polygon(p.xpoints, p.ypoints, p.npoints);
+    Polygon p3 = new Polygon(p.xpoints, p.ypoints, p.npoints);
+    Polygon p4 = new Polygon(p.xpoints, p.ypoints, p.npoints);
+
+    p1.translate(shift, 0);
+    p2.translate(-shift, 0);
+    p3.translate(0, shift);
+    p4.translate(0, -shift);
+
+    Area ret = new Area(p1);
+    ret.add(new Area(p2));
+    ret.add(new Area(p3));
+    ret.add(new Area(p4));
+
+    return ret;
+  }
 
   // If o1 supports o2, return true
   public static boolean isSupport(ABObject o2, ABObject o1) {
