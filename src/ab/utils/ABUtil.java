@@ -1,8 +1,13 @@
 package ab.utils;
 
 import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.geom.Area;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import ab.demo.other.Shot;
 import ab.planner.TrajectoryPlanner;
@@ -11,9 +16,30 @@ import ab.vision.Vision;
 
 public class ABUtil {
 
-  public static int                gap = 5;                      // vision
-                                                                  // tolerance.
+  public static int                gap = 5;
+
   private static TrajectoryPlanner tp  = new TrajectoryPlanner();
+  
+  public static List<ABObject> findBuilding(List<ABObject> objects) {
+    Queue<ABObject> queue = new ArrayDeque<ABObject>();
+    List<ABObject> connectedObjects = new ArrayList<ABObject>();
+    ABObject currentObject = null;
+
+    queue.add(objects.remove(0));
+
+    while ((currentObject = queue.poll()) != null) {
+      connectedObjects.add(currentObject);
+
+      for (int i = 0; i < objects.size(); ++i) {
+        if (currentObject.touches(objects.get(i))) {
+          queue.add(objects.remove(i--));
+        }
+      }
+    }
+
+    return connectedObjects;
+  }
+
   /**
    * Adds 1 px to polygon realshape for the sake of touch method
    */
