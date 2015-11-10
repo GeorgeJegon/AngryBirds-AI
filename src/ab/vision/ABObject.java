@@ -10,14 +10,20 @@ package ab.vision;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
-
 import ab.utils.ABUtil;
 
 public class ABObject extends Rectangle {
   private static final long serialVersionUID = 1L;
   private static int        counter          = 0;
+
+  public Area               _shiftar         = null;
+  protected int             shift            = 3;
+
+  public Area               _ar              = null;
+
   public int                id;
   // object type
   public ABType             type;
@@ -36,18 +42,28 @@ public class ABObject extends Rectangle {
     super(mbr);
     this.type = type;
     this.id = counter++;
+    this._ar = new Area(mbr);
+    mbr.grow(shift, shift);
+    this._shiftar = new Area(mbr);
   }
 
   public ABObject(Rectangle mbr, ABType type, int id) {
     super(mbr);
     this.type = type;
     this.id = id;
+    this._ar = new Area(mbr);
+    mbr.grow(shift, shift);
+    this._shiftar = new Area(mbr);
   }
 
   public ABObject(ABObject ab) {
     super(ab.getBounds());
     this.type = ab.type;
     this.id = ab.id;
+    this._ar = new Area(ab._ar);
+    Rectangle mbr = (Rectangle) ab.getBounds().clone();
+    mbr.grow(shift, shift);
+    this._shiftar = new Area(mbr);
   }
 
   public ABObject() {
