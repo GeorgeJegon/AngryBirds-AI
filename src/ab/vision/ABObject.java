@@ -66,6 +66,26 @@ public class ABObject extends Rectangle {
   public List<ABObject> getSupporters(List<ABObject> objects) {
     return ABUtil.getSupporters(this, objects);
   }
+  public List<ABObject> getBaseSupporters(List<ABObject> objects) {
+    ArrayDeque<ABObject> queue = new ArrayDeque<ABObject>();
+    List<ABObject> listSupport = new ArrayList<ABObject>();
+    List<ABObject> baseSupport = new ArrayList<ABObject>();
+    ABObject currentObject = null;
+
+    queue.addAll(this.getSupporters(objects));
+
+    while ((currentObject = queue.poll()) != null) {
+      listSupport = currentObject.getSupporters(objects);
+      if (listSupport.isEmpty()) {
+        baseSupport.add(currentObject);
+      } else {
+        queue.addAll(listSupport);
+      }
+    }
+
+    return baseSupport;
+  }
+
   public static void resetCounter() {
     counter = 0;
   }
