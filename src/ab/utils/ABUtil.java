@@ -20,6 +20,18 @@ public class ABUtil {
   public static int                gap = 5;
 
   private static TrajectoryPlanner tp  = new TrajectoryPlanner();
+
+  public static List<Building> findBuildings(List<ABObject> objects) {
+    List<ABObject> queue = new ArrayList<ABObject>(objects);
+    List<Building> buildings = new ArrayList<Building>();
+
+    while (!queue.isEmpty()) {
+      buildings.add(ABUtil.findBuilding(queue));
+    }
+
+    return buildings;
+  }
+
   public static Building findBuilding(List<ABObject> objects) {
     Queue<ABObject> queue = new ArrayDeque<ABObject>();
     List<ABObject> connectedObjects = new ArrayList<ABObject>();
