@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import ab.ai.Building;
 import ab.demo.other.Shot;
 import ab.planner.TrajectoryPlanner;
 import ab.vision.ABObject;
@@ -19,8 +20,7 @@ public class ABUtil {
   public static int                gap = 5;
 
   private static TrajectoryPlanner tp  = new TrajectoryPlanner();
-  
-  public static List<ABObject> findBuilding(List<ABObject> objects) {
+  public static Building findBuilding(List<ABObject> objects) {
     Queue<ABObject> queue = new ArrayDeque<ABObject>();
     List<ABObject> connectedObjects = new ArrayList<ABObject>();
     ABObject currentObject = null;
@@ -37,7 +37,7 @@ public class ABUtil {
       }
     }
 
-    return connectedObjects;
+    return new Building(connectedObjects);
   }
 
   /**
