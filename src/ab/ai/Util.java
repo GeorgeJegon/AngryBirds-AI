@@ -123,8 +123,8 @@ public class Util {
 
   private static File createFile(String fileNamePath) {
     File file = new File(fileNamePath);
-    
-    if (!file.exists()){
+
+    if (!file.exists()) {
       file.getParentFile().mkdirs();
       try {
         file.createNewFile();
