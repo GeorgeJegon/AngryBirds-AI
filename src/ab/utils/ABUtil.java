@@ -21,6 +21,26 @@ public class ABUtil {
 
   private static TrajectoryPlanner tp  = new TrajectoryPlanner();
 
+  public static ABObject nearestPig(List<ABObject> listPigs) {
+    ABObject nearestPig = listPigs.get(0);
+    for (ABObject pig : listPigs) {
+      if (pig.getX() < nearestPig.getX()) {
+        nearestPig = pig;
+      }
+    }
+    return nearestPig;
+  }
+
+  public static ABObject highestPig(List<ABObject> listPigs) {
+    ABObject highestPig = listPigs.get(0);
+    for (ABObject pig : listPigs) {
+      if (pig.getY() < highestPig.getY()) {
+        highestPig = pig;
+      }
+    }
+    return highestPig;
+  }
+
   public static List<Building> findBuildings(List<ABObject> objects) {
     List<ABObject> queue = new ArrayList<ABObject>(objects);
     List<Building> buildings = new ArrayList<Building>();
@@ -117,7 +137,6 @@ public class ABUtil {
     int traY = tp.getYCoordinate(vision.findSlingshotMBR(), releasePoint,
         target.x);
     if (Math.abs(traY - target.y) > 100) {
-      // System.out.println(Math.abs(traY - target.y));
       return false;
     }
     boolean result = true;
