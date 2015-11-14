@@ -21,7 +21,7 @@ import ab.vision.Vision;
 
 public abstract class Agent {
   private ImageSegFrame       frame;
-  private final String DATA_PATH = "src/ab/data/";
+  private final String        DATA_PATH    = "src/ab/data/";
 
   protected ActionRobot       aRobot;
   protected Random            randomGenerator;
@@ -146,30 +146,6 @@ public abstract class Agent {
 
   protected void onStartLevel() {
 
-  }
-
-  protected ABObject nearestPig(List<ABObject> listPigs) {
-    ABObject nearestPig = listPigs.get(0);
-    for (ABObject pig : listPigs) {
-      if (pig.getX() < nearestPig.getX()) {
-        nearestPig = pig;
-      }
-    }
-    return nearestPig;
-  }
-
-  protected ABObject highestPig(List<ABObject> listPigs) {
-    ABObject highestPig = listPigs.get(0);
-    for (ABObject pig : listPigs) {
-      if (pig.getY() < highestPig.getY()) {
-        highestPig = pig;
-      }
-    }
-    return highestPig;
-  }
-
-  protected ABObject getSupport(ABObject object, List<ABObject> listObject) {
-    return ABUtil.getSupporters(object, listObject).get(0);
   }
 
   @SuppressWarnings("rawtypes")
@@ -319,7 +295,7 @@ public abstract class Agent {
 
   private void resetLevelInformation() {
     this.saveHeuristicHandler();
-    
+
     this.firstShot = true;
     this.listShots.clear();
     this.aRobot.current_score = 0;
@@ -360,12 +336,13 @@ public abstract class Agent {
     this.resetLevelInformation();
     this.afterLoadNextLevel();
   }
-  
-  private void saveHeuristicHandler(){
-    Util.saveXML(this.currentHeuristicHandler, this.getDataPath() + "heuristics.xml");
+
+  private void saveHeuristicHandler() {
+    Util.saveXML(this.currentHeuristicHandler, this.getDataPath()
+        + "heuristics.xml");
   }
-  
-  private String getDataPath(){
+
+  private String getDataPath() {
     return DATA_PATH + this.getClass().getSimpleName() + "/";
   }
 }
