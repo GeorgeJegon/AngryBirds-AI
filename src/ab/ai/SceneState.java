@@ -14,15 +14,20 @@ public class SceneState {
   private List<ABObject> blocks;
   private List<ABObject> tnts;
   private Rectangle      sling;
+  private Vision         vision;
 
   public SceneState(BufferedImage screenshot) {
     this.screenshot = screenshot;
-    Vision vision = new Vision(this.screenshot);
-    this.birds = vision.findBirdsMBR();
-    this.pigs = vision.findPigsMBR();
-    this.blocks = vision.findBlocksMBR();
+    this.vision = new Vision(this.screenshot);
+    this.birds = vision.findBirdsRealShape();
+    this.pigs = vision.findPigsRealShape();
+    this.blocks = vision.findBlocksRealShape();
     this.tnts = vision.findTNTs();
     this.sling = vision.findSlingshotMBR();
+  }
+
+  public Vision getVision() {
+    return this.vision;
   }
 
   public List<ABObject> getBirds() {
