@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import ab.ai.Level;
 import ab.ai.ListLevel;
+import ab.ai.SceneState;
 import ab.ai.Util;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
@@ -43,21 +44,16 @@ public class MaxScoreLevel extends Agent implements Runnable {
     }
     BufferedImage screenshot = ActionRobot.doScreenShot();
     Vision vision = new Vision(screenshot);
+    SceneState scene = new SceneState(screenshot);
     Level level = new Level();
-    
-    if (this.currentLevel > this.listLevel.size()) {
-      level.setId(this.currentLevel);
-      level.setNumber_of_birds(vision.findBirdsMBR().size());
-      level.setNumber_of_blocks(vision.findBlocksMBR().size());
-      level.setNumber_of_pigs(vision.findPigsMBR().size());
-      level.setNumber_of_tnts(vision.findTNTs().size());
-      level.defineMaxScoreAvaliable();
 
-      this.listLevel.addLevel(level);
-    } else {
-      System.out.println("J� temos informa��es sobre este level");
-    }
-
+    level.setId(this.currentLevel);
+    level.setNumber_of_birds(scene.getBirds().size());
+    level.setNumber_of_blocks(scene.getBlocks().size());
+    level.setNumber_of_pigs(scene.getPigs().size());
+    level.setNumber_of_tnts(scene.getTnts().size());
+    level.defineMaxScoreAvaliable();
+    this.listLevel.addLevel(level);
     return GameState.WON;
   }
 
