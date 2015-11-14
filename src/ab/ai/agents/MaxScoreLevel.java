@@ -1,7 +1,9 @@
 package ab.ai.agents;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import ab.ai.Level;
 import ab.ai.ListLevel;
@@ -10,11 +12,12 @@ import ab.ai.Util;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
 import ab.vision.GameStateExtractor.GameState;
-import ab.vision.Vision;
+import ab.vision.VisionUtils;
 
 public class MaxScoreLevel extends Agent implements Runnable {
   ListLevel                   listLevel       = loadListLevel();
   private static final String MAX_SCORE_LEVEL = "src/ab/data/level_info.xml";
+  private static final String SCREENSHOTS_PATH = "src/ab/data/";
 
   private ListLevel loadListLevel() {
     ListLevel loaded = (ListLevel) Util.loadXML(ListLevel.class,
@@ -42,8 +45,9 @@ public class MaxScoreLevel extends Agent implements Runnable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+
     BufferedImage screenshot = ActionRobot.doScreenShot();
-    Vision vision = new Vision(screenshot);
+    BufferedImage screenshotGrey = VisionUtils.convert2grey(screenshot);
     SceneState scene = new SceneState(screenshot);
     Level level = new Level();
 
@@ -53,6 +57,17 @@ public class MaxScoreLevel extends Agent implements Runnable {
     level.setNumber_of_pigs(scene.getPigs().size());
     level.setNumber_of_tnts(scene.getTnts().size());
     level.defineMaxScoreAvaliable();
+
+    VisionUtils.drawBoundingBoxes(screenshotGrey, new ArrayList<Rectangle>(
+        scene.getBirds()), Color.blue);
+    VisionUtils.drawBoundingBoxes(screenshotGrey, new ArrayList<Rectangle>(
+        scene.getBlocks()), Color.red);
+    VisionUtils.drawBoundingBoxes(screenshotGrey, new ArrayList<Rectangle>(
+        scene.getPigs()), Color.green);
+
+    Util.saveImage(screenshotGrey, SCREENSHOTS_PATH + "/screenshots/level-"
+        + this.currentLevel + "/level-info.png");
+
     this.listLevel.addLevel(level);
     return GameState.WON;
   }
