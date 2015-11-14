@@ -293,6 +293,14 @@ public abstract class Agent {
     this.afterRestartLevel();
   }
 
+  protected String getDataPath() {
+    return DATA_PATH + this.getClass().getSimpleName() + "/";
+  }
+
+  protected String getScreenshotPath() {
+    return DATA_PATH + "/screenshots/";
+  }
+
   private void resetLevelInformation() {
     this.saveHeuristicHandler();
 
@@ -340,9 +348,5 @@ public abstract class Agent {
   private void saveHeuristicHandler() {
     Util.saveXML(this.currentHeuristicHandler, this.getDataPath()
         + "heuristics.xml");
-  }
-
-  private String getDataPath() {
-    return DATA_PATH + this.getClass().getSimpleName() + "/";
   }
 }

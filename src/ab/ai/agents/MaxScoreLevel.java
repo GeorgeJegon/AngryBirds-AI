@@ -15,8 +15,8 @@ import ab.vision.GameStateExtractor.GameState;
 import ab.vision.VisionUtils;
 
 public class MaxScoreLevel extends Agent implements Runnable {
-  ListLevel                   listLevel       = loadListLevel();
-  private static final String MAX_SCORE_LEVEL = "src/ab/data/level_info.xml";
+  ListLevel                   listLevel        = loadListLevel();
+  private static final String MAX_SCORE_LEVEL  = "src/ab/data/level_info.xml";
   private static final String SCREENSHOTS_PATH = "src/ab/data/";
 
   private ListLevel loadListLevel() {
@@ -65,7 +65,7 @@ public class MaxScoreLevel extends Agent implements Runnable {
     VisionUtils.drawBoundingBoxes(screenshotGrey, new ArrayList<Rectangle>(
         scene.getPigs()), Color.green);
 
-    Util.saveImage(screenshotGrey, SCREENSHOTS_PATH + "/screenshots/level-"
+    Util.saveImage(screenshotGrey, this.getScreenshotPath() + "level-"
         + this.currentLevel + "/level-info.png");
 
     this.listLevel.addLevel(level);
