@@ -13,7 +13,7 @@ import ab.vision.Vision;
 
 public class MaxScoreLevel extends Agent implements Runnable {
   ListLevel                   listLevel       = loadListLevel();
-  private static final String MAX_SCORE_LEVEL = "src/ab/data/level_max_score.xml";
+  private static final String MAX_SCORE_LEVEL = "src/ab/data/level_info.xml";
 
   private ListLevel loadListLevel() {
     ListLevel loaded = (ListLevel) Util.loadXML(ListLevel.class,
