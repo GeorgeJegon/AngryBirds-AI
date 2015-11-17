@@ -2,6 +2,7 @@ package ab.utils;
 
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import ab.ai.Building;
 import ab.demo.other.Shot;
 import ab.planner.TrajectoryPlanner;
 import ab.vision.ABObject;
+import ab.vision.ABType;
 import ab.vision.Vision;
 
 public class ABUtil {
@@ -20,6 +22,18 @@ public class ABUtil {
   public static int                gap = 5;
 
   private static TrajectoryPlanner tp  = new TrajectoryPlanner();
+
+  public static List<ABObject> filterObjects(List<ABObject> objects, ABType type) {
+    List<ABObject> listObjects = new ArrayList<ABObject>();
+
+    for (ABObject currentObject : objects) {
+      if (!(currentObject.type.equals(type))) {
+        listObjects.add(currentObject);
+      }
+    }
+
+    return listObjects;
+  }
 
   public static ABObject nearestPig(List<ABObject> listPigs) {
     ABObject nearestPig = listPigs.get(0);
@@ -53,18 +67,23 @@ public class ABUtil {
   }
 
   public static Building findBuilding(List<ABObject> objects) {
-    Queue<ABObject> queue = new ArrayDeque<ABObject>();
+    return findBuilding(objects.remove(0), objects);
+  }
+
+  public static Building findBuilding(ABObject initialObject, List<ABObject> objects) {
+    List<ABObject> listObjects = new ArrayList<ABObject>(objects);
     List<ABObject> connectedObjects = new ArrayList<ABObject>();
+    Queue<ABObject> queue = new ArrayDeque<ABObject>();
     ABObject currentObject = null;
-
-    queue.add(objects.remove(0));
-
+    
+    queue.add(initialObject);
+    
     while ((currentObject = queue.poll()) != null) {
       connectedObjects.add(currentObject);
 
-      for (int i = 0; i < objects.size(); ++i) {
-        if (currentObject.touches(objects.get(i))) {
-          queue.add(objects.remove(i--));
+      for (int i = 0; i < listObjects.size(); ++i) {
+        if (currentObject.touches(listObjects.get(i))) {
+          queue.add(listObjects.remove(i--));
         }
       }
     }
@@ -154,5 +173,4 @@ public class ABUtil {
     }
     return result;
   }
-
 }
