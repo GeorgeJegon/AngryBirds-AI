@@ -15,9 +15,13 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
 import ab.planner.TrajectoryPlanner;
 
 @XmlRootElement
+@XmlType(propOrder = { "score", "x", "y", "dx", "dy", "releasePointX", "releasePointY",
+    "thetaDegrees", "velocity" })
 public class Shot implements Serializable {
 
   /**
