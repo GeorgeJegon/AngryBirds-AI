@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import ab.ai.Match;
 import ab.ai.Util;
 import ab.ai.Heuristics.Heuristic;
 import ab.ai.Heuristics.HeuristicHandler;
@@ -297,13 +298,41 @@ public abstract class Agent {
     return DATA_PATH + this.getClass().getSimpleName() + "/";
   }
 
+  protected String getLevelInfoPath() {
+    return this.getDataPath() + "level-" + this.currentLevel + "/";
+  }
+
   protected String getScreenshotPath() {
     return DATA_PATH + "/screenshots/";
   }
 
-  private void resetLevelInformation() {
-    this.saveHeuristicHandler();
+  protected void saveHeuristicHandler() {
+    if (!this.currentHeuristicHandler.getHeuristics().isEmpty()) {
+      Util.saveXML(this.currentHeuristicHandler, this.getLevelInfoPath()
+          + "heuristics.xml");
+    }
+  }
 
+  protected void saveMatch(GameState state) {
+    Match match = new Match();
+    int score = this.aRobot.current_score;
+
+    if (state == GameState.WON) {
+      score = this.aRobot.getScore();
+    } else {
+      this.currentHeuristic.bad();
+    }
+
+    match.setLevel(this.currentLevel);
+    match.setScore(score);
+    match.setHeuristic(this.currentHeuristic.getName());
+    match.setShots(this.listShots);
+    match.setType(state.toString());
+
+    Util.saveXML(match, this.getLevelInfoPath() + "matches.xml", true);
+  }
+
+  private void resetLevelInformation() {
     this.firstShot = true;
     this.listShots.clear();
     this.aRobot.current_score = 0;
@@ -343,10 +372,5 @@ public abstract class Agent {
 
     this.resetLevelInformation();
     this.afterLoadNextLevel();
-  }
-
-  private void saveHeuristicHandler() {
-    Util.saveXML(this.currentHeuristicHandler, this.getDataPath()
-        + "heuristics.xml");
   }
 }

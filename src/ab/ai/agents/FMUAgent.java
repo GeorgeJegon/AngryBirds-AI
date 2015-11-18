@@ -16,8 +16,6 @@ import ab.vision.GameStateExtractor.GameState;
 import ab.vision.Vision;
 
 public class FMUAgent extends Agent implements Runnable {
-  private static final String MATCHES_FILE = "src/ab/data/FMUAgent/matches.xml";
-
   public FMUAgent() {
     super();
     ActionRobot.GoFromMainMenuToLevelSelection();
@@ -73,27 +71,9 @@ public class FMUAgent extends Agent implements Runnable {
     return state;
   }
 
-  protected void saveMatch(GameState state) {
-    Match match = new Match();
-    int score = this.aRobot.current_score;
-
-    if (state == GameState.WON) {
-      score = this.aRobot.getScore();
-    } else {
-      this.currentHeuristic.bad();
-    }
-
-    match.setLevel(this.currentLevel);
-    match.setScore(score);
-    match.setHeuristic(this.currentHeuristic.getName());
-    match.setShots(this.listShots);
-    match.setType(state.toString());
-
-    Util.saveXML(match, MATCHES_FILE, true);
-  }
-
   @Override
   protected void beforeRestartLevel() {
+    this.saveHeuristicHandler();
     this.saveMatch(GameState.LOST);
   }
 
@@ -104,6 +84,7 @@ public class FMUAgent extends Agent implements Runnable {
 
   @Override
   protected void beforeLoadNextLevel() {
+    this.saveHeuristicHandler();
     this.saveMatch(GameState.WON);
   }
 
