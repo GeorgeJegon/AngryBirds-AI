@@ -24,18 +24,20 @@ public abstract class Agent {
   private ImageSegFrame       frame;
   private final String        DATA_PATH    = "src/ab/data/";
 
+  
   protected ActionRobot       aRobot;
   protected Random            randomGenerator;
-
   protected TrajectoryPlanner tp;
   protected boolean           firstShot;
   protected Point             prevTarget;
   protected List<Shot>        listShots;
   protected Heuristic         currentHeuristic;
   protected HeuristicHandler  currentHeuristicHandler;
+  protected int               failedAttempts;
 
-  public int                  currentLevel = 1;
   public static int           time_limit   = 12;
+  public int                  currentLevel = 1;
+  public int                  totalLevels  = 21;
   public int                  sleepTime    = 3000;
 
   public Agent() {
@@ -45,6 +47,7 @@ public abstract class Agent {
     this.frame = null;
     this.firstShot = true;
     this.listShots = new ArrayList<Shot>();
+    this.failedAttempts = 0;
     this.randomGenerator = new Random();
     this.currentHeuristicHandler = new HeuristicHandler();
   }
@@ -89,11 +92,11 @@ public abstract class Agent {
 
   protected abstract GameState solve();
 
-  protected abstract void beforeRestartLevel();
+  protected abstract boolean beforeRestartLevel();
 
   protected abstract void afterRestartLevel();
 
-  protected abstract void beforeLoadNextLevel();
+  protected abstract boolean beforeLoadNextLevel();
 
   protected abstract void afterLoadNextLevel();
 
@@ -284,16 +287,6 @@ public abstract class Agent {
         * (p1.y - p2.y)));
   }
 
-  protected void onLostState() {
-    this.beforeRestartLevel();
-
-    System.out.println("Restart");
-    this.resetLevelInformation();
-
-    aRobot.restartLevel();
-    this.afterRestartLevel();
-  }
-
   protected String getDataPath() {
     return DATA_PATH + this.getClass().getSimpleName() + "/";
   }
@@ -332,6 +325,11 @@ public abstract class Agent {
     Util.saveXML(match, this.getLevelInfoPath() + "matches.xml", true);
   }
 
+  protected Integer getNextLevel() {
+    this.currentLevel += 1;
+    return this.currentLevel;
+  }
+
   private void resetLevelInformation() {
     this.firstShot = true;
     this.listShots.clear();
@@ -359,18 +357,35 @@ public abstract class Agent {
   }
 
   private void onWonState() {
-    this.beforeLoadNextLevel();
+    boolean continueProccess = this.beforeLoadNextLevel();
 
-    try {
-      Thread.sleep(this.sleepTime);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    if (continueProccess) {
+      try {
+        Thread.sleep(this.sleepTime);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+      aRobot.loadLevel(this.getNextLevel());
+      tp = new TrajectoryPlanner();
+
+      this.resetLevelInformation();
+      this.afterLoadNextLevel();
     }
+  }
 
-    aRobot.loadLevel(++currentLevel);
-    tp = new TrajectoryPlanner();
+  private void onLostState() {
+    this.failedAttempts++;
+    boolean continueProccess = this.beforeRestartLevel();
 
-    this.resetLevelInformation();
-    this.afterLoadNextLevel();
+    if (continueProccess) {
+      System.out.println("Restart");
+      this.resetLevelInformation();
+
+      aRobot.restartLevel();
+      this.afterRestartLevel();
+    }
+  }
+
   }
 }
