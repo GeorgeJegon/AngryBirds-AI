@@ -31,4 +31,16 @@ public class ListLevel {
   public int size() {
     return this.list.size();
   }
+
+  public void add(Level level) {
+    this.list.add(level);
+  }
+
+  public void set(int index, Level level) {
+    this.list.set(index, level);
+  }
+
+  public Level get(int index) {
+    return this.list.get(index);
+  }
 }
