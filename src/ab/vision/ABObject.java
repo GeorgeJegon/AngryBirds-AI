@@ -119,4 +119,11 @@ public class ABObject extends Rectangle {
     counter = 0;
   }
 
+  public boolean isLied() {
+    return this.getWidth() > this.getHeight() || this.isSquare();
+  }
+
+  public boolean isSquare() {
+    return this.getWidth() == this.getHeight();
+  }
 }
