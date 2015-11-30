@@ -25,13 +25,12 @@ public class RandomAgent extends Agent implements Runnable {
   public RandomAgent() {
     super();
     bestShots = loadBestShots();
-    this.currentLevel = 7;
     ActionRobot.GoFromMainMenuToLevelSelection();
   }
 
   @Override
-  protected void beforeRestartLevel() {
-
+  protected boolean beforeRestartLevel() {
+    return true;
   }
 
   @Override
@@ -41,7 +40,7 @@ public class RandomAgent extends Agent implements Runnable {
   }
 
   @Override
-  protected void beforeLoadNextLevel() {
+  protected boolean beforeLoadNextLevel() {
     int score = StateUtil.getScore(ActionRobot.proxy);
     BestShot bs = new BestShot(currentLevel, score, listObjects);
 
@@ -55,6 +54,7 @@ public class RandomAgent extends Agent implements Runnable {
         saveBestShots();
       }
     }
+    return true;
   }
 
   @Override

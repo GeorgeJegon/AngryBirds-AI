@@ -17,7 +17,6 @@ import ab.vision.VisionUtils;
 public class MaxScoreLevel extends Agent implements Runnable {
   ListLevel                   listLevel        = loadListLevel();
   private static final String MAX_SCORE_LEVEL  = "src/ab/data/level_info.xml";
-  private static final String SCREENSHOTS_PATH = "src/ab/data/";
 
   private ListLevel loadListLevel() {
     ListLevel loaded = (ListLevel) Util.loadXML(ListLevel.class,
@@ -73,7 +72,8 @@ public class MaxScoreLevel extends Agent implements Runnable {
   }
 
   @Override
-  protected void beforeRestartLevel() {
+  protected boolean beforeRestartLevel() {
+    return true;
   }
 
   @Override
@@ -81,8 +81,9 @@ public class MaxScoreLevel extends Agent implements Runnable {
   }
 
   @Override
-  protected void beforeLoadNextLevel() {
+  protected boolean beforeLoadNextLevel() {
     Util.saveXML(this.listLevel, MAX_SCORE_LEVEL);
+    return true;
   }
 
   @Override
