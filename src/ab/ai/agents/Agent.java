@@ -57,9 +57,8 @@ public abstract class Agent {
     this.levelsListController = new ArrayList<Integer>();
     this.levelInfo = (ListLevel) this.loadKnowledge(ListLevel.class, DATA_PATH
         + "/level_info.xml");
-    this.listBestShotsMatches = new ListMatches();
-//    this.listBestShotsMatches = (ListMatches) this.loadKnowledge(
-//        ListMatches.class, this.getDataPath() + "/best-shots.xml");
+    this.listBestShotsMatches = (ListMatches) this.loadKnowledge(
+        ListMatches.class, this.getDataPath() + "/best-shots.xml");
     this.failedAttempts = 0;
     this.randomGenerator = new Random();
     this.currentHeuristicHandler = new HeuristicHandler();
@@ -370,7 +369,7 @@ public abstract class Agent {
 
   protected void resetLevelInformation() {
     this.firstShot = true;
-    this.listShots.clear();
+    this.listShots = new ArrayList<Shot>();
     this.aRobot.current_score = 0;
     this.prevTarget = null;
     this.currentHeuristicHandler = new HeuristicHandler();
@@ -429,13 +428,5 @@ public abstract class Agent {
     for (int i = 1; i <= total; i++) {
       this.levelsListController.add(i);
     }
-  }
-
-  public List<Shot> getListShots() {
-    return listShots;
-  }
-
-  public void setListShots(List<Shot> listShots) {
-    this.listShots = listShots;
   }
 }
