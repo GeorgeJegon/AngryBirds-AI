@@ -31,7 +31,7 @@ public class BuildingHeuristic extends Heuristic {
     List<Building> buildings = new ArrayList<Building>();
     List<ABObject> supporters = new ArrayList<ABObject>();
     HashMap<ABObject, List<Point>> trajectoryMap = new HashMap<ABObject, List<Point>>();
-    String screenShotFileName = agent.getScreenshotPath() + "level-"+ agent.currentLevel + "/tiro-" + agent.getListShots().size() + ".png";
+    String screenShotFileName = agent.getScreenshotPath() + "level-"+ agent.currentLevel + "/tiro-" + agent.listShots.size() + ".png";
     BufferedImage screenshotGrey = VisionUtils.convert2grey(screenshot);
     ABObject target = null;
     Point targetCenter = null;

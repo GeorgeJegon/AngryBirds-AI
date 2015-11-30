@@ -1,0 +1,5 @@
+
+<match heuristic="BuildingHeuristic" id="690c8696-d00b-45d5-96d8-32d8de93875d" level="3" score="33220" type="WON">
+    <shot score="5420" x="170" y="336" dx="-229" dy="510" releasePointX="-59" releasePointY="846" theta="78.92979742206063" velocity="2.7436499999999997" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="2619"/>
+    <shot score="27800" x="170" y="336" dx="-520" dy="206" releasePointX="-350" releasePointY="542" theta="44.801745498800805" velocity="2.7868649999999997" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="1238"/>
+</match>

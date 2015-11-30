@@ -1,0 +1,4 @@
+
+<match heuristic="BuildingHeuristic" id="8ec34cd1-bc42-46bc-85e7-fa10d800dc9b" level="1" score="29390" type="WON">
+    <shot score="9390" x="193" y="328" dx="-183" dy="634" releasePointX="10" releasePointY="962" theta="84.13356489478181" velocity="2.7436499999999997" targetType="Wood" birdOnSling="RedBird" tShot="0" tTap="0"/>
+</match>
