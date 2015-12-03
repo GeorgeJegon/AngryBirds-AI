@@ -13,31 +13,38 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import ab.ai.Util;
 import ab.utils.ABUtil;
 
 public class ABObject extends Rectangle {
-  private static final long serialVersionUID = 1L;
-  private static int        counter          = 0;
+  private static final long     serialVersionUID = 1L;
+  private static int            counter          = 0;
+  public HashMap<String, Point> mainPoints       = new HashMap<String, Point>();
+  public String                 pointPosition    = new String();
 
-  public Area               _shiftar         = null;
-  protected int             shift            = 3;
+  public Area                   _shiftar         = null;
+  protected int                 shift            = 3;
 
-  public Area               _ar              = null;
+  public Area                   _ar              = null;
 
-  public int                id;
+  public int                    id;
   // object type
-  public ABType             type;
+  public ABType                 type;
 
-  public int                area             = 0;
+  public int                    area             = 0;
   // For all MBRs, the shape is Rect by default.
-  public ABShape            shape            = ABShape.Rect;
+  public ABShape                shape            = ABShape.Rect;
 
   // For all MBRs, the angle is 0 by default.
-  public double             angle            = 0;
+  public double                 angle            = 0;
 
   // is Hollow or not
-  public boolean            hollow           = false;
+  public boolean                hollow           = false;
 
   public ABObject(Rectangle mbr, ABType type) {
     super(mbr);
@@ -76,8 +83,61 @@ public class ABObject extends Rectangle {
     return type;
   }
 
+  private void defineMainPoints() {
+    this.mainPoints.put("top", this.getTop());
+    this.mainPoints.put("center", this.getCenter());
+    this.mainPoints.put("bottom", this.getBottom());
+  }
+
   public Point getCenter() {
     return new Point((int) getCenterX(), (int) getCenterY());
+  }
+
+  public Point getTop() {
+    return new Point(this.x, this.y);
+  }
+
+  public Point getBottom() {
+    return new Point(this.x + this.width, this.y + this.height - 5);
+  }
+  
+  public String getMainPointByValue(Point targetPoint) {
+    if (this.mainPoints.isEmpty()) {
+      this.defineMainPoints();
+    }
+    
+    for (String key : this.mainPoints.keySet()) {
+      if (this.mainPoints.get(key).equals(targetPoint)){
+        return key;
+      }
+    }
+    
+    return new String();
+  }
+
+  public Point getRandomMainPoint() {
+    List<String> positionTypes = new ArrayList<String>();
+    String type = new String();
+    Point targetPoint = new Point();
+
+    positionTypes.add("top");
+    positionTypes.add("center");
+    positionTypes.add("bottom");
+
+    type = Util.getRandom(positionTypes);
+
+    if (this.mainPoints.isEmpty()) {
+      this.defineMainPoints();
+    }
+
+    targetPoint = this.mainPoints.get(type);
+    this.pointPosition = type;
+
+    return targetPoint;
+  }
+  
+  public String getRandomMainPointPosition() {
+    return this.pointPosition;
   }
 
   public List<ABObject> getSupporters(List<ABObject> objects) {
@@ -91,14 +151,18 @@ public class ABObject extends Rectangle {
     ABObject currentObject = null;
 
     queue.addAll(this.getSupporters(objects));
-
-    while ((currentObject = queue.poll()) != null) {
-      listSupport = currentObject.getSupporters(objects);
-      if (listSupport.isEmpty()) {
-        baseSupport.add(currentObject);
-      } else {
-        queue.addAll(listSupport);
-      }
+    System.out.println("Tamanho total: " + queue.size());
+    
+    if (!queue.isEmpty()) {
+      while ((currentObject = queue.poll()) != null) {
+        listSupport = currentObject.getSupporters(objects);
+        if (listSupport.isEmpty()) {
+          baseSupport.add(currentObject);
+        } else {
+          queue.addAll(listSupport);
+        }
+        System.out.println("Tamanho total: " + queue.size());
+      }  
     }
 
     return baseSupport;
