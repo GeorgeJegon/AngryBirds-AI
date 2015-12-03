@@ -14,9 +14,10 @@ public class HeuristicHandler {
   private Random          randomGenerator;
   private int             maxFrequency;
 
+
   public HeuristicHandler() {
     this.heuristics = new ArrayList<Heuristic>();
-    this.randomGenerator = new Random(123456789L);
+    this.randomGenerator = new Random(System.currentTimeMillis());
   }
 
   @XmlAttribute
@@ -90,6 +91,7 @@ public class HeuristicHandler {
     return null;
   }
 
+  @SuppressWarnings("unused")
   private void updateMaxFrequency(int decreaseValue) {
     this.maxFrequency -= decreaseValue;
   }
