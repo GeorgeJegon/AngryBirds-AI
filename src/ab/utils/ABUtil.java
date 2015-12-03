@@ -63,13 +63,13 @@ public class ABUtil {
     HashMap<ABObject, List<Point>> reachableObjects = new HashMap<ABObject, List<Point>>();
     List<Point> releasePoints = new ArrayList<Point>();
     ABObject target = null;
-    Point targetCenter = null;
+    Point targetPoint = null;
     Point releasePoint = null;
 
     for (ABObject object : objects) {
       target = object;
-      targetCenter = target.getCenter();
-      releasePoints = agent.getReleasePoints(sling, targetCenter);
+      targetPoint = target.getRandomMainPoint();
+      releasePoints = agent.getReleasePoints(sling, targetPoint);
       if (releasePoints.size() > 0) {
         for (Point currentReleasePoint : releasePoints) {
           ABUtil.trajectoryReachableHandler(reachableObjects, currentReleasePoint, vision,
