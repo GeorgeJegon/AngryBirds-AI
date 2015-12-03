@@ -21,7 +21,7 @@ import ab.planner.TrajectoryPlanner;
 
 @XmlRootElement
 @XmlType(propOrder = { "score", "x", "y", "dx", "dy", "releasePointX",
-    "releasePointY", "thetaDegrees", "velocity", "targetType", "birdOnSling" })
+    "releasePointY", "thetaDegrees", "velocity", "targetPointType", "targetType", "birdOnSling" })
 public class Shot implements Serializable {
 
   /**
@@ -43,6 +43,7 @@ public class Shot implements Serializable {
   private double            velocity;
   private String            targetType;
   private String            birdOnSling;
+  private String            targetPointType;
 
   public Shot() {
     x = 0;
@@ -245,5 +246,14 @@ public class Shot implements Serializable {
     return result;
 
   }
+
+  @XmlAttribute
+  public String getTargetPointType() {
+    return targetPointType;
+  }
+
+  public void setTargetPointType(String targetPointType) {
+    this.targetPointType = targetPointType;
+  }  
 
 }
