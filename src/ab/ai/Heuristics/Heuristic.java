@@ -15,23 +15,29 @@ import ab.vision.ABType;
 import ab.vision.GameStateExtractor.GameState;
 import ab.vision.Vision;
 
-@XmlRootElement
-@XmlType(propOrder = { "name", "frequency" })
-public abstract class Heuristic {
+public class Heuristic {
   private int             frequency;
   private int             badDecreaseRate;
+  private String          name;
   protected Random        randomGenerator;
 
   public final static int HEURISTIC_VALUE = 100;
 
   public Heuristic() {
-    this.frequency = HEURISTIC_VALUE;
+    this(HEURISTIC_VALUE);
     this.badDecreaseRate = 1;
     this.randomGenerator = new Random();
+    this.name = this.getClass().getSimpleName();
   }
 
-  public abstract GameState solve(Agent agent, GameState state, Vision vision,
-      Rectangle sling, BufferedImage screenshot, ABType birdOnSling);
+  public Heuristic(int frequency) {
+    this.frequency = frequency;
+  }
+
+  public GameState solve(Agent agent, GameState state, Vision vision,
+      Rectangle sling, BufferedImage screenshot, ABType birdOnSling) {
+    return GameState.PLAYING;
+  }
 
   public void bad() {
     bad(this.badDecreaseRate);
@@ -61,8 +67,14 @@ public abstract class Heuristic {
 
   @XmlAttribute
   public String getName() {
-    return this.getClass().getSimpleName();
+    return this.name;
   }
 
-  public abstract int getHeuristicID();
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public int getHeuristicID() {
+    return -1;
+  }
 }

@@ -1,13 +1,14 @@
 package ab.ai.Heuristics;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import ab.ai.Building;
 import ab.ai.Util;
@@ -20,6 +21,8 @@ import ab.vision.GameStateExtractor.GameState;
 import ab.vision.Vision;
 import ab.vision.VisionUtils;
 
+@XmlRootElement
+@XmlType(propOrder = { "name", "frequency" })
 public class BuildingHeuristic extends Heuristic {
 
   @Override
@@ -33,8 +36,9 @@ public class BuildingHeuristic extends Heuristic {
     HashMap<ABObject, List<Point>> trajectoryMap = new HashMap<ABObject, List<Point>>();
     String screenShotFileName = agent.getScreenshotPath() + "level-"+ agent.currentLevel + "/tiro-" + agent.listShots.size() + ".png";
     BufferedImage screenshotGrey = VisionUtils.convert2grey(screenshot);
+    String targetPosition = new String();
     ABObject target = null;
-    Point targetCenter = null;
+    Point targetPoint = null;
     Point releasePoint = null;
     Shot shot = null;
 
@@ -73,18 +77,19 @@ public class BuildingHeuristic extends Heuristic {
       }
       
       if (target != null) {
-        targetCenter = target.getCenter();
+        targetPoint = target.getRandomMainPoint();
+        targetPosition = target.getRandomMainPointPosition();
         
         if (releasePoint == null) {
-           releasePoint = agent.getReleasePoint(sling, targetCenter);
+           releasePoint = agent.getReleasePoint(sling, targetPoint);
         }
         
-        shot = agent.createShot(target, sling, targetCenter, releasePoint);
-        
+        shot = agent.createShot(target, sling, targetPoint, releasePoint);
         
         if (shot != null) {
           shot.setBirdOnSling(birdOnSling.toString());
           shot.setTargetType(target.type.toString());
+          shot.setTargetPointType(targetPosition);
         
           VisionUtils.drawBoundingBox(screenshotGrey, target, Util.getRandomColor());
           agent.showTrajectory(screenshotGrey, sling, releasePoint, screenShotFileName);
