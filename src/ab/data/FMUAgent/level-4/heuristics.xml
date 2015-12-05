@@ -1,0 +1,4 @@
+<heuristicHandler level="4" maxFrequency="200">
+    <heuristics name="BaseSupportersHeuristic" frequency="100"/>
+    <heuristics name="BuildingHeuristic" frequency="100"/>
+</heuristicHandler>

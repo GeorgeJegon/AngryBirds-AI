@@ -5,22 +5,19 @@
     <level id="4" numberOfBirds="4" numberOfPigs="1" numberOfBlocks="13" numberOfTnts="0" maxScoreAvaliable="41500"/>
     <level id="5" numberOfBirds="4" numberOfPigs="5" numberOfBlocks="32" numberOfTnts="0" maxScoreAvaliable="71000"/>
     <level id="6" numberOfBirds="4" numberOfPigs="2" numberOfBlocks="18" numberOfTnts="0" maxScoreAvaliable="49000"/>
-    <level id="1" numberOfBirds="3" numberOfPigs="1" numberOfBlocks="15" numberOfTnts="0" maxScoreAvaliable="32500"/>
-    <level id="2" numberOfBirds="5" numberOfPigs="4" numberOfBlocks="8" numberOfTnts="0" maxScoreAvaliable="64000"/>
-    <level id="3" numberOfBirds="4" numberOfPigs="2" numberOfBlocks="7" numberOfTnts="0" maxScoreAvaliable="43500"/>
-    <level id="4" numberOfBirds="4" numberOfPigs="1" numberOfBlocks="13" numberOfTnts="0" maxScoreAvaliable="41500"/>
-    <level id="5" numberOfBirds="4" numberOfPigs="5" numberOfBlocks="32" numberOfTnts="0" maxScoreAvaliable="71000"/>
-    <level id="6" numberOfBirds="4" numberOfPigs="2" numberOfBlocks="18" numberOfTnts="0" maxScoreAvaliable="49000"/>
     <level id="7" numberOfBirds="4" numberOfPigs="3" numberOfBlocks="27" numberOfTnts="0" maxScoreAvaliable="58500"/>
     <level id="8" numberOfBirds="4" numberOfPigs="4" numberOfBlocks="9" numberOfTnts="0" maxScoreAvaliable="54500"/>
     <level id="9" numberOfBirds="4" numberOfPigs="3" numberOfBlocks="33" numberOfTnts="0" maxScoreAvaliable="61500"/>
-    <level id="10" numberOfBirds="5" numberOfPigs="2" numberOfBlocks="33" numberOfTnts="0" maxScoreAvaliable="66500"/>
+    <level id="10" numberOfBirds="5" numberOfPigs="2" numberOfBlocks="32" numberOfTnts="0" maxScoreAvaliable="66000"/>
     <level id="11" numberOfBirds="4" numberOfPigs="4" numberOfBlocks="37" numberOfTnts="0" maxScoreAvaliable="68500"/>
-    <level id="12" numberOfBirds="4" numberOfPigs="3" numberOfBlocks="31" numberOfTnts="0" maxScoreAvaliable="60500"/>
+    <level id="12" numberOfBirds="5" numberOfPigs="3" numberOfBlocks="29" numberOfTnts="0" maxScoreAvaliable="69500"/>
     <level id="13" numberOfBirds="4" numberOfPigs="3" numberOfBlocks="29" numberOfTnts="0" maxScoreAvaliable="59500"/>
     <level id="14" numberOfBirds="4" numberOfPigs="9" numberOfBlocks="11" numberOfTnts="0" maxScoreAvaliable="80500"/>
     <level id="15" numberOfBirds="4" numberOfPigs="3" numberOfBlocks="33" numberOfTnts="0" maxScoreAvaliable="61500"/>
-    <level id="16" numberOfBirds="4" numberOfPigs="4" numberOfBlocks="28" numberOfTnts="0" maxScoreAvaliable="64000"/>
+    <level id="16" numberOfBirds="5" numberOfPigs="4" numberOfBlocks="27" numberOfTnts="0" maxScoreAvaliable="73500"/>
     <level id="17" numberOfBirds="3" numberOfPigs="3" numberOfBlocks="43" numberOfTnts="0" maxScoreAvaliable="56500"/>
     <level id="18" numberOfBirds="5" numberOfPigs="4" numberOfBlocks="22" numberOfTnts="0" maxScoreAvaliable="71000"/>
+    <level id="19" numberOfBirds="4" numberOfPigs="1" numberOfBlocks="32" numberOfTnts="0" maxScoreAvaliable="51000"/>
+    <level id="20" numberOfBirds="5" numberOfPigs="2" numberOfBlocks="29" numberOfTnts="0" maxScoreAvaliable="64500"/>
+    <level id="21" numberOfBirds="8" numberOfPigs="3" numberOfBlocks="66" numberOfTnts="0" maxScoreAvaliable="118000"/>
 </levels>

@@ -6,11 +6,13 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 import ab.ai.Building;
+import ab.ai.agents.Agent;
 import ab.demo.other.Shot;
 import ab.planner.TrajectoryPlanner;
 import ab.vision.ABObject;
@@ -22,6 +24,65 @@ public class ABUtil {
   public static int                gap = 5;
 
   private static TrajectoryPlanner tp  = new TrajectoryPlanner();
+  
+  private static final int birdsBlocksDamage[][] = {
+    //wood, ice, stone 
+    { 600, 800, 300 }, // RED_BIRD
+    { 900, 900, 700 }, // YELLOW_BIRD
+    { 300, 700, 150 }, // BLUE_BIRD
+    { 900, 900, 900 }, // BLACK_BIRD
+    { 700, 950, 500 }  // WHITE_BIRD
+  };
+  
+  private static void addObjectTrajectoryToHashMap(HashMap<ABObject, List<Point>> map,
+      ABObject object, Point releasePoint) {
+    List<Point> releasePoints = new ArrayList<Point>();
+
+    if (map.containsKey(object)) {
+      releasePoints = map.get(object);
+    }
+
+    releasePoints.add(releasePoint);
+    map.put(object, releasePoints);
+  }
+
+  private static boolean trajectoryReachableHandler(
+      HashMap<ABObject, List<Point>> map, Point releasePoint, Vision vision,
+      ABObject target) {
+    Point targetCenter = target.getCenter();
+
+    if (ABUtil.isReachableFast(vision, targetCenter, releasePoint)) {
+      ABUtil.addObjectTrajectoryToHashMap(map, target, releasePoint);
+      return true;
+    }
+    return false;
+  }
+
+  public static HashMap<ABObject, List<Point>> findReachableObjectsTrajectory(
+      Agent agent, List<ABObject> objects, Rectangle sling, Vision vision) {
+    HashMap<ABObject, List<Point>> reachableObjects = new HashMap<ABObject, List<Point>>();
+    List<Point> releasePoints = new ArrayList<Point>();
+    ABObject target = null;
+    Point targetPoint = null;
+    Point releasePoint = null;
+
+    for (ABObject object : objects) {
+      target = object;
+      targetPoint = target.getRandomMainPoint();
+      releasePoints = agent.getReleasePoints(sling, targetPoint);
+      if (releasePoints.size() > 0) {
+        for (Point currentReleasePoint : releasePoints) {
+          ABUtil.trajectoryReachableHandler(reachableObjects, currentReleasePoint, vision,
+              target); 
+        }
+      } else {
+        releasePoint = agent.getDefaultReleasePoint(sling);
+        ABUtil.trajectoryReachableHandler(reachableObjects, releasePoint, vision,
+            target);
+      }
+    }
+    return reachableObjects;
+  }
 
   public static List<ABObject> filterObjects(List<ABObject> objects, ABType type) {
     List<ABObject> listObjects = new ArrayList<ABObject>();
@@ -55,6 +116,23 @@ public class ABUtil {
     return highestPig;
   }
 
+  public static List<Building> findBuildingsWithPigs(List<ABObject> objects,
+      List<ABObject> pigs) {
+    List<Building> buildings = ABUtil.findBuildings(objects);
+    List<Building> buildingsWithPigs = new ArrayList<Building>();
+
+    for (Building building : buildings) {
+      for (ABObject pig : pigs) {
+        if (building.hasPig(pig)) {
+          buildingsWithPigs.add(building);
+          break;
+        }
+      }
+    }
+
+    return buildingsWithPigs;
+  }
+
   public static List<Building> findBuildings(List<ABObject> objects) {
     List<ABObject> queue = new ArrayList<ABObject>(objects);
     List<Building> buildings = new ArrayList<Building>();
@@ -70,14 +148,15 @@ public class ABUtil {
     return findBuilding(objects.remove(0), objects);
   }
 
-  public static Building findBuilding(ABObject initialObject, List<ABObject> objects) {
-    List<ABObject> listObjects = new ArrayList<ABObject>(objects);
+  public static Building findBuilding(ABObject initialObject,
+      List<ABObject> objects) {
+    List<ABObject> listObjects = objects;
     List<ABObject> connectedObjects = new ArrayList<ABObject>();
     Queue<ABObject> queue = new ArrayDeque<ABObject>();
     ABObject currentObject = null;
-    
+
     queue.add(initialObject);
-    
+
     while ((currentObject = queue.poll()) != null) {
       connectedObjects.add(currentObject);
 
@@ -172,5 +251,27 @@ public class ABUtil {
 
     }
     return result;
+  }
+  
+  public static boolean isReachableFast(Vision vision, Point target, Point releasePoint) {
+    Rectangle sling = vision.findSlingshotMBR();
+    List<ABObject> blocks = vision.findBlocksMBR();
+    List<Point> points = new ArrayList<Point>();
+    int traY = tp.getYCoordinate(sling, releasePoint, target.x);
+   
+    if (Math.abs(traY - target.y) > 100) {
+      return false;
+    }
+  
+    for (Point point : points) {
+      if (point.x < 840 && point.y < 480 && point.y > 100 && point.x > 400)
+        for (ABObject ab : blocks) {
+          if (((ab.contains(point) && !ab.contains(target)) || Math.abs(vision
+              .getMBRVision()._scene[point.y][point.x] - 72) < 10)
+              && point.x < target.x)
+            return false;
+        }
+    }
+    return true;
   }
 }

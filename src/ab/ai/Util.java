@@ -1,5 +1,6 @@
 package ab.ai;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,10 +9,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
@@ -19,9 +20,164 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import weka.core.Attribute;
+import weka.core.FastVector;
+import weka.core.Instance;
+import weka.core.Instances;
+import weka.core.converters.ArffLoader;
+import weka.core.converters.ArffSaver;
+
 import org.apache.commons.codec.Charsets;
 
+import ab.demo.other.Shot;
+import ab.vision.ABType;
+
 public class Util {
+  
+  public static <E> E getRandom(List<E> list){
+    Random randomGenerator = new Random(System.currentTimeMillis());
+    return list.get(randomGenerator.nextInt(list.size()));
+  }
+  
+  public static Color getRandomColor() {
+    int r, g, b;
+    Random randomGenerator = new Random();
+    
+    r = randomGenerator.nextInt(255);
+    g = randomGenerator.nextInt(255);
+    b = randomGenerator.nextInt(255);
+    
+    return new Color(r,g,b);
+  }
+  
+  public static void savePlainTextFile(String content, String fileNamePath) {
+    File file = Util.createFile(fileNamePath);
+    FileWriter writer;
+    try {
+      writer = new FileWriter(file);
+      writer.write(content);
+      writer.close();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  public static FastVector createShotHeaders() {
+    FastVector attributes = new FastVector();
+    FastVector labelValues = new FastVector();
+    FastVector birdTypes = new FastVector();
+    FastVector targetTypes = new FastVector();
+    
+    labelValues.addElement("WON");
+    labelValues.addElement("LOST");
+    
+    birdTypes.addElement(ABType.RedBird.toString());
+    birdTypes.addElement(ABType.BlackBird.toString());
+    birdTypes.addElement(ABType.BlueBird.toString());
+    birdTypes.addElement(ABType.YellowBird.toString());
+    birdTypes.addElement(ABType.WhiteBird.toString());
+    
+    targetTypes.addElement(ABType.Pig.toString());
+    targetTypes.addElement(ABType.Stone.toString());
+    targetTypes.addElement(ABType.Ice.toString());
+    targetTypes.addElement(ABType.Wood.toString());
+
+    attributes.addElement(new Attribute("angle"));
+    attributes.addElement(new Attribute("velocity"));
+    attributes.addElement(new Attribute("level"));
+    attributes.addElement(new Attribute("score"));
+    attributes.addElement(new Attribute("heuristic", (FastVector) null));
+    attributes.addElement(new Attribute("birdOnSling", birdTypes));
+    attributes.addElement(new Attribute("targetType", targetTypes));
+    attributes.addElement(new Attribute("label", labelValues));
+
+    return attributes;
+  }
+
+  public static Instances createShotDataSet() {
+    FastVector attributes = Util.createShotHeaders();
+    Instances dataSet = new Instances("Shots", attributes, 0);
+
+    return dataSet;
+  }
+
+  public static Instances createMatchInstanceArff(Match match) {
+    double[] values;
+    Instances dataSet = Util.createShotDataSet();
+
+    for (Shot shot : match.getShots()) {
+      values = new double[dataSet.numAttributes()];
+      values[0] = shot.getThetaDegrees();
+      values[1] = shot.getVelocity();
+      values[2] = match.getLevel();
+      values[3] = shot.getScore();
+      values[4] = dataSet.attribute("heuristic").addStringValue(match.getHeuristic());
+      values[5] = dataSet.attribute("birdOnSling").indexOfValue(shot.getBirdOnSling());
+      values[6] = dataSet.attribute("targetType").indexOfValue(shot.getTargetType());
+      values[7] = dataSet.attribute("label").indexOfValue(match.getType());
+
+      dataSet.add(new Instance(1.0, values));
+    }
+    return dataSet;
+  }
+
+  public static Instances mergeInstancesArff(Instances newDataSet,
+      Instances oldDataSet) {
+    Instances mergedDataset;
+
+    if (oldDataSet.numInstances() > 0) {
+      mergedDataset = new Instances(oldDataSet);
+      for (int i = 0; i < newDataSet.numInstances(); i++) {
+        Instance currentInstance = newDataSet.instance(i);
+        mergedDataset.add(currentInstance);
+      }
+    } else {
+      mergedDataset = newDataSet;
+    }
+
+    return mergedDataset;
+  }
+
+  public static Instances mergeInstancesArff(Instances newDataSet,
+      String fileNamePath) {
+    Instances oldDataSet = loadArff(fileNamePath);
+    return mergeInstancesArff(newDataSet, oldDataSet);
+  }
+
+  public static Instances loadArff(String fileNamePath) {
+    ArffLoader arffLoader = new ArffLoader();
+    File file = Util.createFile(fileNamePath);
+    Instances dataSet = null;
+
+    try {
+      if (file.length() > 0) {
+        arffLoader.setFile(file);
+        dataSet = arffLoader.getDataSet();
+      } else {
+        dataSet = Util.createShotDataSet();
+      }
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return dataSet;
+  }
+
+  public static void saveArff(Instances dataSet, String fileNamePath) {
+    Util.savePlainTextFile(dataSet.toString(), fileNamePath);
+    // File file = createFile(fileNamePath);
+    // ArffSaver saver = new ArffSaver();
+    // saver.setInstances(dataSet);
+    // try {
+    // saver.setFile(file);
+    // saver.writeBatch();
+    // } catch (IOException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+  }
+
   public static void saveImage(BufferedImage image, String fileNamePath) {
     try {
       ImageIO.write(image, "png", createFile(fileNamePath));

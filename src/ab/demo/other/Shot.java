@@ -20,8 +20,8 @@ import javax.xml.bind.annotation.XmlType;
 import ab.planner.TrajectoryPlanner;
 
 @XmlRootElement
-@XmlType(propOrder = { "score", "x", "y", "dx", "dy", "releasePointX", "releasePointY",
-    "thetaDegrees", "velocity" })
+@XmlType(propOrder = { "score", "x", "y", "dx", "dy", "releasePointX",
+    "releasePointY", "thetaDegrees", "velocity", "targetPointType", "targetType", "birdOnSling" })
 public class Shot implements Serializable {
 
   /**
@@ -41,6 +41,9 @@ public class Shot implements Serializable {
   private int               score;
   private double            theta;
   private double            velocity;
+  private String            targetType;
+  private String            birdOnSling;
+  private String            targetPointType;
 
   public Shot() {
     x = 0;
@@ -99,6 +102,24 @@ public class Shot implements Serializable {
     this.setReleasePointY(releasePoint.y);
     this.setTheta(thetaAngle);
     this.setVelocity(velocity);
+  }
+
+  @XmlAttribute
+  public String getTargetType() {
+    return targetType;
+  }
+
+  public void setTargetType(String targetType) {
+    this.targetType = targetType;
+  }
+
+  @XmlAttribute
+  public String getBirdOnSling() {
+    return birdOnSling;
+  }
+
+  public void setBirdOnSling(String birdOnSling) {
+    this.birdOnSling = birdOnSling;
   }
 
   @XmlAttribute
@@ -225,5 +246,14 @@ public class Shot implements Serializable {
     return result;
 
   }
+
+  @XmlAttribute
+  public String getTargetPointType() {
+    return targetPointType;
+  }
+
+  public void setTargetPointType(String targetPointType) {
+    this.targetPointType = targetPointType;
+  }  
 
 }

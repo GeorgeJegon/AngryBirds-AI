@@ -10,5 +10,7 @@
 	<classpathentry kind="lib" path="external/jaxb-api.jar"/>
 	<classpathentry kind="lib" path="external/jaxb-impl.jar"/>
 	<classpathentry kind="lib" path="external/jaxb-core.jar"/>
+	<classpathentry kind="lib" path="external/weka.jar" sourcepath="external/weka-src.jar"/>
+	<classpathentry kind="lib" path="external/weka-src.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

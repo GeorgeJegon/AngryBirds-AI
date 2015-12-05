@@ -11,6 +11,8 @@ package ab.vision;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Vision {
@@ -110,5 +112,39 @@ public class Vision {
     if (visionMBR == null)
       visionMBR = new VisionMBR(image);
     return visionMBR;
+  }
+
+  public ABType getBirdTypeOnSling() {
+    List<ABObject> _birds = findBirdsRealShape();
+    
+
+    if (_birds == null || _birds.isEmpty()) {
+      return ABType.Unknown;
+    }
+
+    Collections.sort(_birds, new Comparator<Rectangle>() {
+      public int compare(Rectangle o1, Rectangle o2) {
+        return ((Integer) (o1.y)).compareTo((Integer) (o2.y));
+      }
+    });
+
+    Rectangle sling = findSlingshotRealShape();
+
+    ABObject possibleBirdOnSling = _birds.get(0);
+
+    if (sling != null && sling.x < possibleBirdOnSling.x
+        && sling.x + sling.width > (int) possibleBirdOnSling.getCenterX()) {
+      return possibleBirdOnSling.type;
+    }
+
+    return ABType.Unknown;
+  }
+
+  public Rectangle findSlingshotRealShape() {
+    if (visionRealShape == null) {
+      visionRealShape = new VisionRealShape(image);
+    }
+
+    return visionRealShape.findSling();
   }
 }

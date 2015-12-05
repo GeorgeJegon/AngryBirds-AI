@@ -1,0 +1,46 @@
+@relation Shots
+
+@attribute angle numeric
+@attribute velocity numeric
+@attribute level numeric
+@attribute score numeric
+@attribute heuristic string
+@attribute birdOnSling {RedBird,BlackBird,BlueBird,YellowBird,WhiteBird}
+@attribute targetType {Pig,Stone,Ice,Wood}
+@attribute label {WON,LOST}
+
+@data
+49.991333,2.776815,13,10810,BuildingHeuristic,BlueBird,Wood,LOST
+53.491639,2.758725,13,230,BuildingHeuristic,BlueBird,Ice,LOST
+51.312908,2.776815,13,720,BuildingHeuristic,RedBird,Wood,LOST
+51.367443,2.776815,13,860,BuildingHeuristic,RedBird,Wood,LOST
+49.991333,2.776815,13,16530,BuildingHeuristic,BlueBird,Wood,WON
+50.407967,2.776815,13,290,BuildingHeuristic,BlueBird,Stone,WON
+78.010469,2.74365,13,400,BuildingHeuristic,RedBird,Stone,WON
+55.627031,2.758725,13,9200,BuildingHeuristic,RedBird,Stone,WON
+50.475674,2.776815,13,13520,BuildingHeuristic,BlueBird,Stone,WON
+81.259495,2.74365,13,120,BuildingHeuristic,BlueBird,Stone,WON
+77.192383,2.74365,13,4370,BuildingHeuristic,RedBird,Stone,WON
+77.266126,2.74365,13,7430,BuildingHeuristic,RedBird,Stone,WON
+79.380345,2.74365,13,11950,BuildingHeuristic,BlueBird,Stone,LOST
+48.955978,2.776815,13,960,BuildingHeuristic,BlueBird,Stone,LOST
+49.561477,2.776815,13,1120,BuildingHeuristic,RedBird,Stone,LOST
+49.139189,2.776815,13,440,BuildingHeuristic,RedBird,Stone,LOST
+79.131475,2.74365,13,19160,BuildingHeuristic,BlueBird,Stone,WON
+53.54279,2.758725,13,28350,BuildingHeuristic,BlueBird,Stone,WON
+78.498444,2.74365,13,160,BuildingHeuristic,BlueBird,Stone,LOST
+63.108997,2.7537,13,5720,BuildingHeuristic,BlueBird,Stone,LOST
+75.77923,2.74365,13,370,BuildingHeuristic,RedBird,Stone,LOST
+50.587244,2.776815,13,1010,BuildingHeuristic,RedBird,Stone,LOST
+78.896167,2.74365,13,11690,BuildingHeuristic,BlueBird,Wood,LOST
+59.050478,2.7537,13,1240,BuildingHeuristic,BlueBird,Stone,LOST
+49.446692,2.776815,13,1140,BuildingHeuristic,RedBird,Stone,LOST
+78.010469,2.74365,13,-1,BuildingHeuristic,RedBird,Ice,LOST
+75.539214,2.74365,13,12570,BuildingHeuristic,BlueBird,Stone,LOST
+48.772284,2.776815,13,970,BuildingHeuristic,BlueBird,Stone,LOST
+80.40272,2.74365,13,1150,BuildingHeuristic,RedBird,Stone,LOST
+57.772782,2.758725,13,1030,BuildingHeuristic,RedBird,Stone,LOST
+75.612933,2.74365,13,12680,BuildingHeuristic,BlueBird,Stone,WON
+49.197096,2.776815,13,2740,BuildingHeuristic,BlueBird,Stone,WON
+81.185958,2.74365,13,730,BuildingHeuristic,RedBird,Stone,WON
+77.921043,2.74365,13,6070,BuildingHeuristic,RedBird,Wood,WON

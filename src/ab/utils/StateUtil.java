@@ -23,7 +23,7 @@ import ab.vision.GameStateExtractor.GameState;
 public class StateUtil {
 	/**
 	 * Get the current game state
-	 * 
+	 *
 	 * @return GameState: the current state
 	 * */
 	public static GameState getGameState(Proxy proxy) {
@@ -66,9 +66,9 @@ public class StateUtil {
 	/**
 	 * The method checks the score every second, and return when the score is
 	 * stable (not flashing).
-	 * 
+	 *
 	 * @return score: the current score.
-	 * 
+	 *
 	 * */
 	public static int getScore(Proxy proxy) {
 
@@ -86,6 +86,8 @@ public class StateUtil {
 
 			if ((state == GameState.WON) || (state == GameState.PLAYING)) {
 				current_score = _getScore(proxy);
+			} else if (state == GameState.LOST) {
+			  return _getScore(proxy);
 			} else {
 				System.out.println(" Unexpected state: " + state);
 			}

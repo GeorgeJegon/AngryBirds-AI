@@ -7,15 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import ab.ai.ListLevel;
+import ab.ai.ListMatches;
+import ab.ai.Match;
 import ab.ai.Util;
 import ab.ai.Heuristics.Heuristic;
 import ab.ai.Heuristics.HeuristicHandler;
-import ab.utils.ABUtil;
 import ab.demo.other.ActionRobot;
 import ab.demo.other.Shot;
 import ab.planner.TrajectoryPlanner;
 import ab.utils.ImageSegFrame;
 import ab.vision.ABObject;
+import ab.vision.ABType;
 import ab.vision.GameStateExtractor.GameState;
 import ab.vision.Vision;
 
@@ -25,17 +28,23 @@ public abstract class Agent {
 
   protected ActionRobot       aRobot;
   protected Random            randomGenerator;
-
   protected TrajectoryPlanner tp;
   protected boolean           firstShot;
+  protected int               failedAttempts;
   protected Point             prevTarget;
-  protected List<Shot>        listShots;
+  public List<Shot>           listShots;
   protected Heuristic         currentHeuristic;
   protected HeuristicHandler  currentHeuristicHandler;
+  protected List<Integer>     levelsCleared;
+  protected List<Integer>     levelsListController;
+  protected ListLevel         levelInfo;
+  protected ListMatches       listBestShotsMatches;
 
-  public int                  currentLevel = 1;
   public static int           time_limit   = 12;
+  public int                  currentLevel = 1;
+  public int                  totalLevels  = 21;
   public int                  sleepTime    = 3000;
+  public boolean              trainning;
 
   public Agent() {
     this.aRobot = new ActionRobot();
@@ -44,8 +53,17 @@ public abstract class Agent {
     this.frame = null;
     this.firstShot = true;
     this.listShots = new ArrayList<Shot>();
+    this.levelsCleared = new ArrayList<Integer>();
+    this.levelsListController = new ArrayList<Integer>();
+    this.levelInfo = (ListLevel) this.loadKnowledge(ListLevel.class, DATA_PATH
+        + "/level_info.xml");
+    this.listBestShotsMatches = (ListMatches) this.loadKnowledge(
+        ListMatches.class, this.getDataPath() + "/best-shots.xml");
+    this.failedAttempts = 0;
     this.randomGenerator = new Random();
     this.currentHeuristicHandler = new HeuristicHandler();
+    this.trainning = false;
+    this.initializeLevelsListController(this.totalLevels);
   }
 
   public void run() {
@@ -88,23 +106,23 @@ public abstract class Agent {
 
   protected abstract GameState solve();
 
-  protected abstract void beforeRestartLevel();
+  protected abstract boolean beforeRestartLevel();
 
   protected abstract void afterRestartLevel();
 
-  protected abstract void beforeLoadNextLevel();
+  protected abstract boolean beforeLoadNextLevel();
 
   protected abstract void afterLoadNextLevel();
 
   protected abstract void onShotFinish(Shot currentShot);
 
-  protected void showTrajectory(BufferedImage screenshot, Rectangle sling,
+  public void showTrajectory(BufferedImage screenshot, Rectangle sling,
       Point releasePoint, String fileNamePath) {
     this.tp.plotTrajectory(screenshot, sling, releasePoint);
     Util.saveImage(screenshot, fileNamePath);
   }
 
-  protected void showTrajectory(BufferedImage screenshot, Rectangle sling,
+  public void showTrajectory(BufferedImage screenshot, Rectangle sling,
       Point releasePoint) {
     this.tp.plotTrajectory(screenshot, sling, releasePoint);
 
@@ -121,20 +139,22 @@ public abstract class Agent {
     }
   }
 
-  protected void showTrajectory(Rectangle sling, Point releasePoint) {
+  public void showTrajectory(Rectangle sling, Point releasePoint) {
     BufferedImage screenshot = ActionRobot.doScreenShot();
     this.showTrajectory(screenshot, sling, releasePoint);
   }
 
   protected Boolean waitForSling(Vision vision, Rectangle sling,
-      BufferedImage screenshot) {
-    while (sling == null && this.aRobot.getState() == GameState.PLAYING) {
+      BufferedImage screenshot, ABType birdOnSling) {
+    while (sling == null && birdOnSling == ABType.Unknown
+        && this.aRobot.getState() == GameState.PLAYING) {
       System.out
           .println("No slingshot detected. Please remove pop up or zoom out");
       ActionRobot.fullyZoomOut();
       screenshot = ActionRobot.doScreenShot();
       vision = new Vision(screenshot);
       sling = vision.findSlingshotMBR();
+      birdOnSling = vision.getBirdTypeOnSling();
     }
 
     return sling != null;
@@ -145,7 +165,7 @@ public abstract class Agent {
   }
 
   protected void onStartLevel() {
-
+    this.failedAttempts = 0;
   }
 
   @SuppressWarnings("rawtypes")
@@ -162,10 +182,18 @@ public abstract class Agent {
     return (loaded != null) ? loaded : loadedInstance;
   }
 
-  protected Point getReleasePoint(Rectangle sling, Point _tpt) {
+  public List<Point> getReleasePoints(Rectangle sling, Point _tpt) {
+    return tp.estimateLaunchPoint(sling, _tpt);
+  }
+
+  public Point getDefaultReleasePoint(Rectangle sling) {
+    return tp.findReleasePoint(sling, Math.PI / 4);
+  }
+
+  public Point getReleasePoint(Rectangle sling, Point _tpt) {
     Point releasePoint = null;
     // estimate the trajectory
-    ArrayList<Point> pts = tp.estimateLaunchPoint(sling, _tpt);
+    List<Point> pts = this.getReleasePoints(sling, _tpt);
 
     // do a high shot when entering a level to find an accurate velocity
     if (firstShot && pts.size() > 1) {
@@ -183,7 +211,7 @@ public abstract class Agent {
       if (pts.isEmpty()) {
         System.out.println("No release point found for the target");
         System.out.println("Try a shot with 45 degree");
-        releasePoint = tp.findReleasePoint(sling, Math.PI / 4);
+        releasePoint = this.getDefaultReleasePoint(sling);
       }
     }
     return releasePoint;
@@ -213,7 +241,7 @@ public abstract class Agent {
     return tp.getTapTime(sling, releasePoint, _tpt, tapInterval);
   }
 
-  protected GameState executeShot(Rectangle sling, Shot shot, GameState state,
+  public GameState executeShot(Rectangle sling, Shot shot, GameState state,
       Point releasePoint) {
     // check whether the slingshot is changed. the change of the slingshot
     // indicates a change in the scale.
@@ -249,21 +277,9 @@ public abstract class Agent {
     return state;
   }
 
-  protected Shot createShot(ABObject abObject, Rectangle sling, Point _tpt,
+  public Shot createShotObject(ABObject abObject, Rectangle sling, Point _tpt,
       Point releasePoint) {
     Shot shot = null;
-
-    // point near it
-    if (prevTarget != null && distance(prevTarget, _tpt) < 10) {
-      double _angle = randomGenerator.nextDouble() * Math.PI * 2;
-      _tpt.x = _tpt.x + (int) (Math.cos(_angle) * 10);
-      _tpt.y = _tpt.y + (int) (Math.sin(_angle) * 10);
-      System.out.println("Randomly changing to " + _tpt);
-    }
-
-    prevTarget = new Point(_tpt.x, _tpt.y);
-
-    // Get the reference point
     Point refPoint = tp.getReferencePoint(sling);
 
     // Calculate the tapping time according the bird type
@@ -278,34 +294,82 @@ public abstract class Agent {
     return shot;
   }
 
+  public Shot createShot(ABObject abObject, Rectangle sling, Point _tpt,
+      Point releasePoint) {
+    Shot shot = null;
+
+    // point near it
+    if (prevTarget != null && distance(prevTarget, _tpt) < 10) {
+      double _angle = randomGenerator.nextDouble() * Math.PI * 2;
+      _tpt.x = _tpt.x + (int) (Math.cos(_angle) * 10);
+      _tpt.y = _tpt.y + (int) (Math.sin(_angle) * 10);
+      System.out.println("Randomly changing to " + _tpt);
+    }
+
+    prevTarget = new Point(_tpt.x, _tpt.y);
+
+    return this.createShotObject(abObject, sling, _tpt, releasePoint);
+  }
+
   protected double distance(Point p1, Point p2) {
     return Math.sqrt((double) ((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y)
         * (p1.y - p2.y)));
-  }
-
-  protected void onLostState() {
-    this.beforeRestartLevel();
-
-    System.out.println("Restart");
-    this.resetLevelInformation();
-
-    aRobot.restartLevel();
-    this.afterRestartLevel();
   }
 
   protected String getDataPath() {
     return DATA_PATH + this.getClass().getSimpleName() + "/";
   }
 
-  protected String getScreenshotPath() {
+  protected String getLevelInfoPath() {
+    return this.getDataPath() + "level-" + this.currentLevel + "/";
+  }
+
+  public String getScreenshotPath() {
     return DATA_PATH + "/screenshots/";
   }
 
-  private void resetLevelInformation() {
-    this.saveHeuristicHandler();
+  protected void saveHeuristicHandler() {
+    if (!this.currentHeuristicHandler.getHeuristics().isEmpty()) {
+      Util.saveXML(this.currentHeuristicHandler, this.getLevelInfoPath()
+          + "heuristics.xml");
+    }
+  }
 
+  protected Match createMatch(GameState state) {
+    Match match = new Match();
+    int score = this.aRobot.current_score;
+
+    if (state == GameState.WON) {
+      score = this.aRobot.getScore();
+    } else {
+      this.currentHeuristic.bad();
+    }
+
+    match.setLevel(this.currentLevel);
+    match.setScore(score);
+    match.setHeuristic(this.currentHeuristic.getName());
+    match.setShots(this.listShots);
+    match.setType(state.toString());
+
+    return match;
+  }
+
+  protected void saveMatch(Match match) {
+    Util.saveXML(match, this.getLevelInfoPath() + "matches.xml", true);
+    Util.saveXML(match, this.getDataPath() + "matches.xml", true);
+  }
+
+  protected Integer getNextLevel() {
+    this.currentLevel = ++this.currentLevel % (this.totalLevels + 1);
+    if (this.currentLevel <= 0) {
+      this.currentLevel = 1;
+    }
+    return this.currentLevel;
+  }
+
+  protected void resetLevelInformation() {
     this.firstShot = true;
-    this.listShots.clear();
+    this.listShots = new ArrayList<Shot>();
     this.aRobot.current_score = 0;
     this.prevTarget = null;
     this.currentHeuristicHandler = new HeuristicHandler();
@@ -330,23 +394,39 @@ public abstract class Agent {
   }
 
   private void onWonState() {
-    this.beforeLoadNextLevel();
+    boolean continueProccess = this.beforeLoadNextLevel();
 
-    try {
-      Thread.sleep(this.sleepTime);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+    if (continueProccess) {
+      try {
+        Thread.sleep(this.sleepTime);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+      aRobot.loadLevel(this.getNextLevel());
+      tp = new TrajectoryPlanner();
+
+      this.resetLevelInformation();
+      this.afterLoadNextLevel();
     }
-
-    aRobot.loadLevel(++currentLevel);
-    tp = new TrajectoryPlanner();
-
-    this.resetLevelInformation();
-    this.afterLoadNextLevel();
   }
 
-  private void saveHeuristicHandler() {
-    Util.saveXML(this.currentHeuristicHandler, this.getDataPath()
-        + "heuristics.xml");
+  private void onLostState() {
+    this.failedAttempts++;
+    boolean continueProccess = this.beforeRestartLevel();
+
+    if (continueProccess) {
+      System.out.println("Restart");
+      this.resetLevelInformation();
+
+      aRobot.restartLevel();
+      this.afterRestartLevel();
+    }
+  }
+
+  private void initializeLevelsListController(int total) {
+    for (int i = 1; i <= total; i++) {
+      this.levelsListController.add(i);
+    }
   }
 }
