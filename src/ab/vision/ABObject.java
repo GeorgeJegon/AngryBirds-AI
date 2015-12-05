@@ -151,7 +151,6 @@ public class ABObject extends Rectangle {
     ABObject currentObject = null;
 
     queue.addAll(this.getSupporters(objects));
-    System.out.println("Tamanho total: " + queue.size());
     
     if (!queue.isEmpty()) {
       while ((currentObject = queue.poll()) != null) {
@@ -161,7 +160,6 @@ public class ABObject extends Rectangle {
         } else {
           queue.addAll(listSupport);
         }
-        System.out.println("Tamanho total: " + queue.size());
       }  
     }
 
