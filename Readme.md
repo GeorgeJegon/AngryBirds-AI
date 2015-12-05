@@ -1,6 +1,8 @@
 # Trabalho de Conclusão de Curso de Ciência da Computação - 2015
 Nosso projeto se baseia em uma competição entre Agentes Inteligentes capazes de jogar [Angry Birds](https://www.angrybirds.com/). Temos como objetivo analisar os conceitos básicos para o estudo de *Inteligencia Artificial* aplicada a jogos, assim podemos vivenciar as dificuldades e aprender na prática o que nos foi passado em aula.
 
+Diferentemente do Projeto básico da competição, o nosso ainda não roda com um entry point único e não é buildado dentro do `ABSoftware`, para executar o nosso Agente é necessário apenas abrir o **Eclipse** acessar a classe `FMUAgent` e dar **Run**.
+
 ## Angry Birds AI Competition
 Site da Competição: https://aibirds.org/
 
