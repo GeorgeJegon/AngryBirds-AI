@@ -1,0 +1,32 @@
+
+<match heuristic="BuildingHeuristic" id="dfb3c6bf-428f-4027-82c1-ee9cbeecb20e" level="10" score="42220" type="WON">
+    <shot score="5170" x="174" y="325" dx="-441" dy="274" releasePointX="-267" releasePointY="599" theta="53.930590100418996" velocity="2.7587249999999996" targetType="Ice" birdOnSling="BlueBird" tShot="0" tTap="1175"/>
+    <shot score="16490" x="174" y="325" dx="-367" dy="367" releasePointX="-193" releasePointY="692" theta="64.19194219406658" velocity="2.7486749999999995" targetType="Ice" birdOnSling="BlueBird" tShot="0" tTap="1728"/>
+    <shot score="3570" x="174" y="325" dx="-217" dy="472" releasePointX="-43" releasePointY="797" theta="79.2387990592351" velocity="2.7436499999999997" targetType="Ice" birdOnSling="BlueBird" tShot="0" tTap="2910"/>
+    <shot score="16990" x="174" y="325" dx="-481" dy="197" releasePointX="-307" releasePointY="522" theta="46.070157844980095" velocity="2.7868649999999997" targetType="Stone" birdOnSling="BlueBird" tShot="0" tTap="998"/>
+</match>
+<match heuristic="BuildingHeuristic" id="6ef90721-e9dc-4f40-bfe9-975acb972848" level="10" score="52190" type="WON">
+    <shot score="18970" x="174" y="325" dx="-285" dy="434" releasePointX="-111" releasePointY="759" theta="72.95961679471202" velocity="2.7436499999999997" targetType="Stone" birdOnSling="BlueBird" tShot="0" tTap="2101"/>
+    <shot score="6440" x="174" y="325" dx="-507" dy="113" releasePointX="-333" releasePointY="438" theta="37.73304559418831" velocity="2.80395" targetType="Stone" birdOnSling="BlueBird" tShot="0" tTap="1183"/>
+    <shot score="26780" x="174" y="325" dx="-153" dy="497" releasePointX="21" releasePointY="822" theta="84.68172789648027" velocity="2.7436499999999997" targetType="Stone" birdOnSling="BlueBird" tShot="0" tTap="2789"/>
+</match>
+<match heuristic="BaseSupportersHeuristic" id="3c38515d-f343-4b7f-bd6f-0653b0b6ef6b" level="10" score="28749" type="LOST">
+    <shot score="5970" x="174" y="325" dx="-257" dy="451" releasePointX="-83" releasePointY="776" theta="75.61860540890939" velocity="2.7436499999999997" targetPointType="top" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="2291"/>
+    <shot score="6810" x="174" y="325" dx="-419" dy="306" releasePointX="-245" releasePointY="631" theta="57.343107752638105" velocity="2.7587249999999996" targetPointType="top" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="1456"/>
+    <shot score="15830" x="174" y="325" dx="-419" dy="307" releasePointX="-245" releasePointY="632" theta="57.393289499179424" velocity="2.7587249999999996" targetPointType="bottom" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="1487"/>
+    <shot score="140" x="174" y="325" dx="-426" dy="297" releasePointX="-252" releasePointY="622" theta="56.33591695274355" velocity="2.7587249999999996" targetPointType="center" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="1434"/>
+    <shot score="-1" x="174" y="325" dx="-255" dy="452" releasePointX="-81" releasePointY="777" theta="75.80144597613683" velocity="2.7436499999999997" targetPointType="top" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="2301"/>
+</match>
+<match heuristic="BuildingHeuristic" id="1ec8cf81-9087-4d25-a014-be44890098b3" level="10" score="14570" type="LOST">
+    <shot score="4120" x="174" y="325" dx="-456" dy="248" releasePointX="-282" releasePointY="573" theta="51.26432343814239" velocity="2.7768149999999996" targetPointType="top" targetType="Ice" birdOnSling="BlueBird" tShot="0" tTap="1130"/>
+    <shot score="4520" x="174" y="325" dx="-446" dy="266" releasePointX="-272" releasePointY="591" theta="53.0917646017557" velocity="2.7587249999999996" targetPointType="bottom" targetType="Ice" birdOnSling="BlueBird" tShot="0" tTap="1147"/>
+    <shot score="4570" x="174" y="325" dx="-275" dy="441" releasePointX="-101" releasePointY="766" theta="73.93878501382706" velocity="2.7436499999999997" targetPointType="bottom" targetType="Ice" birdOnSling="BlueBird" tShot="0" tTap="2104"/>
+    <shot score="1150" x="174" y="325" dx="-481" dy="195" releasePointX="-307" releasePointY="520" theta="45.92981241661967" velocity="2.7868649999999997" targetPointType="center" targetType="Stone" birdOnSling="BlueBird" tShot="0" tTap="1005"/>
+    <shot score="210" x="174" y="325" dx="-483" dy="190" releasePointX="-309" releasePointY="515" theta="45.43078721700863" velocity="2.7868649999999997" targetPointType="bottom" targetType="Stone" birdOnSling="BlueBird" tShot="0" tTap="1074"/>
+</match>
+<match heuristic="BaseSupportersHeuristic" id="120c96b5-ae6a-4078-a149-09c72c324261" level="10" score="40140" type="WON">
+    <shot score="1240" x="174" y="325" dx="-182" dy="487" releasePointX="-8" releasePointY="812" theta="82.26044021472856" velocity="2.7436499999999997" targetPointType="center" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="2639"/>
+    <shot score="5540" x="174" y="325" dx="-260" dy="449" releasePointX="-86" releasePointY="774" theta="75.33326399704696" velocity="2.7436499999999997" targetPointType="center" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="2303"/>
+    <shot score="18010" x="174" y="325" dx="-419" dy="307" releasePointX="-245" releasePointY="632" theta="57.393289499179424" velocity="2.7587249999999996" targetPointType="bottom" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="1460"/>
+    <shot score="15350" x="174" y="325" dx="-489" dy="176" releasePointX="-315" releasePointY="501" theta="43.98473802832887" velocity="2.7868649999999997" targetPointType="center" targetType="Pig" birdOnSling="BlueBird" tShot="0" tTap="1034"/>
+</match>

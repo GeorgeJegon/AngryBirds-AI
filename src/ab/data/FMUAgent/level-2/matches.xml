@@ -4,3 +4,16 @@
     <shot score="6170" x="208" y="315" dx="-566" dy="124" releasePointX="-358" releasePointY="439" theta="33.345262584145345" velocity="2.8139999999999996" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="854"/>
     <shot score="26400" x="208" y="315" dx="-527" dy="240" releasePointX="-319" releasePointY="555" theta="44.796101289533205" velocity="2.7868649999999997" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="1188"/>
 </match>
+<match heuristic="BuildingHeuristic" id="cdf81d16-946a-4e7e-8502-953f40fa7339" level="2" score="43220" type="WON">
+    <shot score="6040" x="208" y="315" dx="-169" dy="554" releasePointX="39" releasePointY="869" theta="84.93932435842058" velocity="2.7436499999999997" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="2675"/>
+    <shot score="10960" x="208" y="315" dx="-567" dy="119" releasePointX="-359" releasePointY="434" theta="32.853902632505395" velocity="2.8139999999999996" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="788"/>
+    <shot score="26220" x="208" y="315" dx="-529" dy="237" releasePointX="-321" releasePointY="552" theta="44.45563842729281" velocity="2.7868649999999997" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="1179"/>
+</match>
+<match heuristic="BuildingHeuristic" id="c44dfae1-e3c7-4047-a405-13eb4fb7b6b3" level="2" score="52310" type="WON">
+    <shot score="6260" x="208" y="315" dx="-236" dy="529" releasePointX="-28" releasePointY="844" theta="79.45355053517598" velocity="2.7436499999999997" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="2548"/>
+    <shot score="46050" x="208" y="315" dx="-567" dy="119" releasePointX="-359" releasePointY="434" theta="32.853902632505395" velocity="2.8139999999999996" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="787"/>
+</match>
+<match heuristic="BuildingHeuristic" id="ace20800-b195-4131-b842-fef359157087" level="2" score="51770" type="WON">
+    <shot score="10670" x="208" y="315" dx="-569" dy="108" releasePointX="-361" releasePointY="423" theta="31.77220399744242" velocity="2.8240499999999997" targetPointType="bottom" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="794"/>
+    <shot score="11100" x="208" y="315" dx="-552" dy="177" releasePointX="-344" releasePointY="492" theta="38.550465296157725" velocity="2.80395" targetPointType="center" targetType="Stone" birdOnSling="RedBird" tShot="0" tTap="995"/>
+</match>

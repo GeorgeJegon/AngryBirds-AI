@@ -3,3 +3,14 @@
     <shot score="5420" x="170" y="336" dx="-229" dy="510" releasePointX="-59" releasePointY="846" theta="78.92979742206063" velocity="2.7436499999999997" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="2619"/>
     <shot score="27800" x="170" y="336" dx="-520" dy="206" releasePointX="-350" releasePointY="542" theta="44.801745498800805" velocity="2.7868649999999997" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="1238"/>
 </match>
+<match heuristic="BuildingHeuristic" id="37d85867-1838-4ea9-acab-19fcf34f7744" level="3" score="33220" type="WON">
+    <shot score="5420" x="170" y="336" dx="-229" dy="510" releasePointX="-59" releasePointY="846" theta="78.92979742206063" velocity="2.7436499999999997" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="2619"/>
+    <shot score="27800" x="170" y="336" dx="-520" dy="206" releasePointX="-350" releasePointY="542" theta="44.801745498800805" velocity="2.7868649999999997" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="1221"/>
+</match>
+<match heuristic="BuildingHeuristic" id="a8d59dd1-c512-4e41-8ed2-e70c1436fe52" level="3" score="31630" type="WON">
+    <shot score="5420" x="170" y="336" dx="-229" dy="510" releasePointX="-59" releasePointY="846" theta="78.92979742206063" velocity="2.7436499999999997" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="2619"/>
+    <shot score="26210" x="170" y="336" dx="-233" dy="509" releasePointX="-63" releasePointY="845" theta="78.61513194287183" velocity="2.7436499999999997" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="2558"/>
+</match>
+<match heuristic="BaseSupportersHeuristic" id="6344db45-96f9-4c25-989a-faff6cad3a8d" level="3" score="40590" type="WON">
+    <shot score="10590" x="170" y="336" dx="-232" dy="509" releasePointX="-62" releasePointY="845" theta="78.69006752597979" velocity="2.7436499999999997" targetPointType="bottom" targetType="Pig" birdOnSling="RedBird" tShot="0" tTap="2618"/>
+</match>

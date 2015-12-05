@@ -1,0 +1,22 @@
+@relation Shots
+
+@attribute angle numeric
+@attribute velocity numeric
+@attribute level numeric
+@attribute score numeric
+@attribute heuristic string
+@attribute birdOnSling {RedBird,BlackBird,BlueBird,YellowBird,WhiteBird}
+@attribute targetType {Pig,Stone,Ice,Wood}
+@attribute label {WON,LOST}
+
+@data
+81.504703,2.74365,20,0,BuildingHeuristic,YellowBird,Wood,LOST
+39.251337,2.80395,20,4550,BuildingHeuristic,YellowBird,Wood,LOST
+44.569213,2.786865,20,12700,BuildingHeuristic,YellowBird,Wood,LOST
+78.846341,2.74365,20,13060,BuildingHeuristic,YellowBird,Wood,LOST
+44.877048,2.786865,20,-1,BuildingHeuristic,YellowBird,Wood,LOST
+78.462479,2.74365,20,0,BuildingHeuristic,YellowBird,Pig,LOST
+78.148751,2.74365,20,0,BuildingHeuristic,YellowBird,Pig,LOST
+42.694451,2.786865,20,3190,BuildingHeuristic,YellowBird,Pig,LOST
+40.046743,2.80395,20,1230,BuildingHeuristic,YellowBird,Pig,LOST
+42.694451,2.786865,20,2910,BuildingHeuristic,YellowBird,Pig,LOST

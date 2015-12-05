@@ -1,0 +1,15 @@
+
+<match heuristic="BuildingHeuristic" id="ec71a690-69db-4510-ac28-e6c3f61d2634" level="18" score="20069" type="LOST">
+    <shot score="5780" x="171" y="332" dx="-523" dy="332" releasePointX="-352" releasePointY="664" theta="51.68297206725087" velocity="2.7768149999999996" targetType="Wood" birdOnSling="YellowBird" tShot="0" tTap="1274"/>
+    <shot score="10060" x="171" y="332" dx="-245" dy="569" releasePointX="-74" releasePointY="901" theta="78.62034770213727" velocity="2.7436499999999997" targetType="Wood" birdOnSling="YellowBird" tShot="0" tTap="2512"/>
+    <shot score="1950" x="171" y="332" dx="-238" dy="572" releasePointX="-67" releasePointY="904" theta="79.1493146069494" velocity="2.7436499999999997" targetType="Wood" birdOnSling="YellowBird" tShot="0" tTap="2505"/>
+    <shot score="2280" x="171" y="332" dx="-532" dy="318" releasePointX="-361" releasePointY="650" theta="50.39366306275701" velocity="2.7768149999999996" targetType="Wood" birdOnSling="YellowBird" tShot="0" tTap="1296"/>
+    <shot score="-1" x="171" y="332" dx="-578" dy="223" releasePointX="-407" releasePointY="555" theta="42.06432655357883" velocity="2.80395" targetType="Wood" birdOnSling="YellowBird" tShot="0" tTap="1070"/>
+</match>
+<match heuristic="BaseSupportersHeuristic" id="9fe0e629-c136-413e-b5a5-ac26cdb06987" level="18" score="24029" type="LOST">
+    <shot score="4460" x="171" y="332" dx="-213" dy="582" releasePointX="-42" releasePointY="914" theta="81.01271785926565" velocity="2.7436499999999997" targetPointType="bottom" targetType="Pig" birdOnSling="YellowBird" tShot="0" tTap="2745"/>
+    <shot score="6350" x="171" y="332" dx="-245" dy="569" releasePointX="-74" releasePointY="901" theta="78.62034770213727" velocity="2.7436499999999997" targetPointType="center" targetType="Pig" birdOnSling="YellowBird" tShot="0" tTap="2570"/>
+    <shot score="10350" x="171" y="332" dx="-568" dy="248" releasePointX="-397" releasePointY="580" theta="44.21682571613644" velocity="2.7868649999999997" targetPointType="center" targetType="Pig" birdOnSling="YellowBird" tShot="0" tTap="1142"/>
+    <shot score="2870" x="171" y="332" dx="-489" dy="380" releasePointX="-318" releasePointY="712" theta="56.156207102531496" velocity="2.7587249999999996" targetPointType="bottom" targetType="Pig" birdOnSling="YellowBird" tShot="0" tTap="1518"/>
+    <shot score="-1" x="171" y="332" dx="-319" dy="531" releasePointX="-148" releasePointY="863" theta="72.78490552597782" velocity="2.7436499999999997" targetPointType="top" targetType="Pig" birdOnSling="YellowBird" tShot="0" tTap="2236"/>
+</match>
